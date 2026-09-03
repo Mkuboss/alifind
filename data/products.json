@@ -6,11 +6,15 @@
     "price": "Rp 45.000",
     "originalPrice": "Rp 150.000",
     "discount": "70%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005960922668.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005960922668.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.9,
     "sold": "25k+",
     "badge": "Fall Fest Deal",
-    "categories": ["Accessories", "Pria", "Trending"]
+    "categories": [
+      "Accessories",
+      "Pria",
+      "Trending"
+    ]
   },
   {
     "id": 2,
@@ -19,11 +23,15 @@
     "price": "Rp 25.000",
     "originalPrice": "Rp 75.000",
     "discount": "66%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005006097458897.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005006097458897.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.9,
     "sold": "30k+",
     "badge": "Bestseller",
-    "categories": ["Accessories", "Wanita", "Trending"]
+    "categories": [
+      "Accessories",
+      "Wanita",
+      "Trending"
+    ]
   },
   {
     "id": 3,
@@ -32,11 +40,14 @@
     "price": "Rp 18.000",
     "originalPrice": "Rp 55.000",
     "discount": "67%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005004970449536.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005004970449536.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.8,
     "sold": "18k+",
     "badge": "Hot",
-    "categories": ["Accessories", "Wanita"]
+    "categories": [
+      "Accessories",
+      "Wanita"
+    ]
   },
   {
     "id": 4,
@@ -45,11 +56,15 @@
     "price": "Rp 32.000",
     "originalPrice": "Rp 95.000",
     "discount": "65%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005006270971018.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005006270971018.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.7,
     "sold": "12k+",
     "badge": "Viral TikTok",
-    "categories": ["Accessories", "Fashion", "Trending"]
+    "categories": [
+      "Accessories",
+      "Fashion",
+      "Trending"
+    ]
   },
   {
     "id": 5,
@@ -58,11 +73,15 @@
     "price": "Rp 29.000",
     "originalPrice": "Rp 85.000",
     "discount": "65%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005003991501661.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005003991501661.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.8,
     "sold": "14k+",
     "badge": "Bestseller",
-    "categories": ["Accessories", "Pria", "Wanita"]
+    "categories": [
+      "Accessories",
+      "Pria",
+      "Wanita"
+    ]
   },
   {
     "id": 6,
@@ -71,11 +90,14 @@
     "price": "Rp 68.000",
     "originalPrice": "Rp 195.000",
     "discount": "65%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005427308561.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005427308561.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.9,
     "sold": "9k+",
     "badge": "Fall Fest Deal",
-    "categories": ["Fashion", "Wanita"]
+    "categories": [
+      "Fashion",
+      "Wanita"
+    ]
   },
   {
     "id": 7,
@@ -84,11 +106,15 @@
     "price": "Rp 22.000",
     "originalPrice": "Rp 65.000",
     "discount": "66%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005004284171682.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005004284171682.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.8,
     "sold": "11k+",
     "badge": "Hot",
-    "categories": ["Accessories", "Wanita", "Trending"]
+    "categories": [
+      "Accessories",
+      "Wanita",
+      "Trending"
+    ]
   },
   {
     "id": 8,
@@ -97,11 +123,14 @@
     "price": "Rp 19.000",
     "originalPrice": "Rp 55.000",
     "discount": "66%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005003543218956.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005003543218956.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.9,
     "sold": "22k+",
     "badge": "Top Rated",
-    "categories": ["Accessories", "Wanita"]
+    "categories": [
+      "Accessories",
+      "Wanita"
+    ]
   },
   {
     "id": 9,
@@ -110,11 +139,14 @@
     "price": "Rp 35.000",
     "originalPrice": "Rp 89.000",
     "discount": "61%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005960571922.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005960571922.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.8,
     "sold": "15k+",
     "badge": "Bestseller",
-    "categories": ["Accessories", "Pria"]
+    "categories": [
+      "Accessories",
+      "Pria"
+    ]
   },
   {
     "id": 10,
@@ -123,11 +155,16 @@
     "price": "Rp 38.000",
     "originalPrice": "Rp 88.000",
     "discount": "56%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005004488056726.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005004488056726.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.7,
     "sold": "8k+",
     "badge": "Fall Fest Deal",
-    "categories": ["Accessories", "Fashion", "Pria", "Wanita"]
+    "categories": [
+      "Accessories",
+      "Fashion",
+      "Pria",
+      "Wanita"
+    ]
   },
   {
     "id": 11,
@@ -136,11 +173,14 @@
     "price": "Rp 42.000",
     "originalPrice": "Rp 99.000",
     "discount": "57%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005885619682.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005005885619682.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.8,
     "sold": "19k+",
     "badge": "Hot",
-    "categories": ["Accessories", "Pria"]
+    "categories": [
+      "Accessories",
+      "Pria"
+    ]
   },
   {
     "id": 12,
@@ -149,10 +189,13 @@
     "price": "Rp 26.000",
     "originalPrice": "Rp 70.000",
     "discount": "62%",
-    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005003661876840.html&aff_fcid=default&aff_platform=portals-hotproduct",
+    "affiliateLink": "https://s.click.aliexpress.com/deep_link.htm?dl_target_url=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005003661876840.html&aff_fcid=default&aff_platform=portals&sk=default&terminal_id=portals&src=ibdm_d",
     "rating": 4.7,
     "sold": "7k+",
     "badge": "Trending",
-    "categories": ["Accessories", "Wanita"]
+    "categories": [
+      "Accessories",
+      "Wanita"
+    ]
   }
 ]
