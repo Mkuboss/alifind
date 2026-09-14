@@ -1,181 +1,778 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="theme-color" content="#1a1710">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="p:domain_verify" content="a247da74dc1b19962597f6b41b86f81d"/>
 
   <!-- SEO -->
-  <title>AliFind — Kurasi Produk Terlaris AliExpress</title>
-  <meta name="description" content="Kurasi 12 produk terlaris AliExpress: aksesoris, perhiasan, jam tangan. Rating 4.5+, ribuan orders, harga termurah. Beli langsung di AliExpress.">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="AliFind — Kurasi Produk Terlaris AliExpress">
-  <meta property="og:description" content="Produk terlaris terkurasi data: rating 4.5+, ribuan orders. Beli langsung di AliExpress.">
+  <title>AliFind — Achados AliExpress em Alta, Curados por Dados</title>
+  <meta name="description" content="Best-sellers AliExpress selecionados: beleza, joias, casa, fitness. Nota média 4.8★, milhares de pedidos, até 76% off.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://mku-api.xyz/">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta property="og:title" content="AliFind — Achados AliExpress em Alta">
+  <meta property="og:description" content="Curadoria de best-sellers AliExpress: nota alta, pedidos reais, menores preços.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mku-api.xyz/">
+  <meta property="og:image" content="https://mku-api.xyz/og-image.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://mku-api.xyz/og-image.png">
 
   <!-- Preconnect CDN -->
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://ae-pic-a1.aliexpress-media.com">
+  <link rel="dns-prefetch" href="https://ae-pic-a1.aliexpress-media.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- font-display: swap sudah di-request via &display=swap; preload non-blocking agar teks tidak blank saat font loading -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind hasil compile lokal (css/tw.css, ±20KB). Dulu Play CDN runtime —
+       jauh lebih lambat di mobile karena compile di browser. Regenerasi saat
+       menambah class baru: tailwindcss -c tailwind.config.js -o css/tw.css --minify -->
+  <link rel="stylesheet" href="css/tw.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HYQ30MH80M"></script>
+  <!-- ── Consent Mode (GDPR/ePrivacy + LGPD · CJEU C-673/17 "Planet49") ──
+       GA4 TIDAK dimuat sebelum pengguna menyetujui. Default = denied, jadi
+       tidak ada cookie analitik yang dipasang sampai tombol "Aceitar todos". -->
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HYQ30MH80M');
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500
+    });
+    (function () {
+      var c = null;
+      try { c = localStorage.getItem('alifind_consent'); } catch (e) {}
+      if (c !== 'granted') return;   // belum/tidak setuju → GA4 tidak dimuat sama sekali
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HYQ30MH80M';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      gtag('config', 'G-HYQ30MH80M', { anonymize_ip: true });
+    })();
   </script>
 
   <style>
-    body { background: #0b0b0d; color: #f5f5f7; font-family: 'Segoe UI', Arial, sans-serif; }
-    .product-card { transition: transform .25s ease, border-color .25s ease; }
-    .product-card:hover { transform: translateY(-6px); border-color: #2e3a40; }
+    :root {
+      --paper: #faf6f0;
+      --card: #ffffff;
+      --ink: #232019;
+      --ink-soft: #6f685c;
+      --coral: #e85d4a;
+      --green: #1f7a5c;
+      --coral-deep: #c9432f;
+      --sand: #f0e7d8;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .display { font-family: 'Fraunces', Georgia, serif; }
+
+    /* subtle paper-grain */
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .35; z-index: 0;
+      background-image: radial-gradient(#00000009 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid #eadfcd;
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow: 0 1px 2px #2320190a;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 34px -14px #c9432f33;
+      border-color: #e3b7a9;
+    }
     .skeleton {
-      background: linear-gradient(90deg, #121216 25%, #1c1c22 50%, #121216 75%);
+      background: linear-gradient(90deg, #f1eadf 25%, #f9f5ee 50%, #f1eadf 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
     }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-    .badge-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.75; } }
-    .filter-btn { border: 1px solid #26262c; color: #b8b8c0; transition: all .2s; }
-    .filter-btn.active, .filter-btn:hover { background: #22d3ee; color: #04252b; border-color: #22d3ee; font-weight: 700; }
-    .glow-dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:#22d3ee; box-shadow:0 0 8px #22d3ee; margin-right:8px; }
-    .hero-gradient-text {
-      background: linear-gradient(90deg, #ff6a3d, #ff4747);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    .fade-in { animation: fadeUp .45s ease both; }
+    .badge-pulse { animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .7; } }
+
+    .filter-btn {
+      border: 1px solid #e2d5c0; color: var(--ink-soft); background: #fff;
+      transition: all .18s;
+      flex: 0 0 auto; white-space: nowrap;
     }
-    .btn-primary { background: linear-gradient(135deg, #ff6a3d, #ff4747); box-shadow: 0 8px 24px rgba(255,71,71,.25); }
-    .btn-primary:hover { box-shadow: 0 10px 30px rgba(255,71,71,.4); }
-    .buy-btn { background: linear-gradient(135deg, #ff6a3d, #ff4747); }
-    .buy-btn:hover { filter: brightness(1.08); }
-    .urgency-bar { background: linear-gradient(90deg, #101018, #0d1b22, #101018); border-bottom: 1px solid #173039; }
-    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .filter-sticky { top: var(--hdr-h, 61px); transition: top .25s ease, padding .25s ease, box-shadow .25s ease; }
+    #site-header { transition: transform .25s ease; will-change: transform; }
+
+    /* ── Opsi A: hemat layar mobile saat scroll ──
+       Scroll ke bawah  → header naik keluar, filter bar naik ke top:0 dan memendek.
+       Scroll ke atas   → header kembali. Hanya berlaku mobile (<768px, di JS). */
+    body.hdr-hidden #site-header { transform: translateY(-100%); }
+    body.hdr-hidden .filter-sticky { top: 0; }
+    #search-input { transition: padding .25s ease, font-size .25s ease; }
+    @media (max-width: 767px) {
+      body.compact #search-input { padding-top: .5rem; padding-bottom: .5rem; font-size: 13px; }
+      body.compact #filter-buttons .filter-btn { padding-top: .3rem; padding-bottom: .3rem; }
+      body.compact .filter-sticky { padding-top: .4rem; padding-bottom: .4rem; box-shadow: 0 6px 14px -8px #23201933; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #site-header, .filter-sticky, #search-input { transition: none; }
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 700;
+    }
+    .buy-btn { background: var(--coral-deep); }
+    .buy-btn:hover { background: #a8331f; }
+    .price-off { background: var(--coral-deep); }
+    .hero-pill {
+      background: #fff; border: 1px solid #eadfcd; color: var(--ink-soft);
+      box-shadow: 0 1px 2px #2320190a;
+    }
+    .hero-card {
+      background: var(--card); border: 1px solid #eadfcd;
+      box-shadow: 0 24px 48px -20px #c9432f2b;
+    }
+    .input-soft { background: #fff; border: 1px solid #e2d5c0; color: var(--ink); }
+    .input-soft::placeholder { color: #b3a893; }
+    .input-soft:focus { border-color: var(--coral); box-shadow: 0 0 0 3px #e85d4a22; outline: none; }
+    html { scroll-behavior: smooth; }
+    .marquee-track { animation: marquee 28s linear infinite; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } html { scroll-behavior: auto; } }
+    .stat-num { color: var(--coral-deep); }
+    .section-line { height: 3px; width: 56px; background: var(--coral); border-radius: 999px; }
+
+    /* ── Kartu produk: bisa diklik ── */
+    .product-card { cursor: pointer; }
+    .product-card:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+
+    /* ── Tombol hati (wishlist) ── */
+    .fav-btn {
+      background: #ffffffdd; backdrop-filter: blur(4px); color: #6f685c;
+      transition: transform .18s ease, color .18s ease;
+    }
+    .fav-btn:hover { transform: scale(1.12); color: var(--coral); }
+    .fav-btn.on { color: var(--coral); }
+    .fav-btn.on i { font-weight: 900; }
+
+    /* ── Bottom-sheet modal detail produk ── */
+    .sheet-backdrop {
+      position: fixed; inset: 0; background: #232019b8; z-index: 90;
+      opacity: 0; pointer-events: none; transition: opacity .25s ease;
+    }
+    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+    .sheet {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 91;
+      pointer-events: none;   /* tertutup = jangan menelan klik kartu di belakangnya */
+      max-height: 92vh; overflow-y: auto; overscroll-behavior: contain;
+      background: var(--paper); border-radius: 22px 22px 0 0;
+      transform: translateY(102%); transition: transform .3s cubic-bezier(.32,.72,0,1);
+      box-shadow: 0 -18px 44px -14px #23201959;
+    }
+    .sheet.open { transform: translateY(0); pointer-events: auto; }
+    @media (min-width: 768px) {
+      .sheet {
+        left: 50%; bottom: auto; top: 50%; right: auto;
+        width: min(880px, 92vw); max-height: 88vh;
+        border-radius: 22px;
+        transform: translate(-50%, -46%) scale(.96); opacity: 0;
+        transition: transform .28s ease, opacity .28s ease;
+      }
+      .sheet.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+    }
+    .sheet-grabber { width: 44px; height: 4px; border-radius: 999px; background: #d8c9b4; margin: 10px auto 0; }
+    @media (min-width: 768px) { .sheet-grabber { display: none; } }
+    body.sheet-open { overflow: hidden; }
+
+    /* ── Drawer wishlist (kanan) ── */
+    .wish-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 91;
+      pointer-events: none;
+      width: min(400px, 90vw); background: var(--paper);
+      transform: translateX(102%); transition: transform .28s cubic-bezier(.32,.72,0,1);
+      box-shadow: -16px 0 40px -16px #2320194d; display: flex; flex-direction: column;
+    }
+    .wish-drawer.open { transform: translateX(0); pointer-events: auto; }
+    .wish-count {
+      position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px;
+      background: var(--coral); color: #fff; border-radius: 999px;
+      font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+      padding: 0 5px;
+    }
+    .wish-count.hidden-count { display: none; }
+
+    /* ── Bar harga + Beli di dasar sheet ─────────────────────────
+       Dulu pakai `sticky -bottom-5` (offset NEGATIF): begitu scroll
+       mencapai akhir konten, bar meluncur turun 20px ke posisi
+       naturalnya — terlihat seperti harga "ikut turun". Dengan
+       bottom:0 ia menempel permanen di tepi bawah sheet. */
+    .sheet-cta-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: 0 -8px 20px -12px #23201940;
+    }
+
+    /* ── Trust block dalam sheet (isi ruang bawah setelah harga pindah) ── */
+    .trust-row { display: flex; align-items: flex-start; gap: 10px; }
+    .trust-ico {
+      flex: none; width: 30px; height: 30px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #fdf1ee; color: var(--coral, #e85d4a); font-size: 13px;
+    }
+
+    /* ── Label hemat ── */
+    .save-line { color: var(--green, #1f7a5c); font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+
+    /* ── Kartu penawaran pembuka ── */
+    .offer-card {
+      background: #fff; border: 1px solid #eadfcd; cursor: pointer;
+      box-shadow: 0 2px 6px #23201908;
+    }
+    .offer-card:hover { border-color: var(--coral); box-shadow: 0 6px 18px -6px #e85d4a33; }
+    .offer-ico {
+      display: inline-flex; width: 32px; height: 32px; border-radius: 999px;
+      align-items: center; justify-content: center; font-size: 15px; background: #faf6f0;
+    }
+
+    /* ── Tombol kembali ke atas ── */
+    .back-top {
+      opacity: 0; pointer-events: none; transform: translateY(14px);
+      transition: opacity .25s ease, transform .25s ease, background .2s ease;
+    }
+    .back-top.show { opacity: 1; pointer-events: auto; transform: none; }
+    .back-top:hover { background: var(--coral); color: #fff; }
+
+    /* ── Toast ── */
+    #toast-wrap { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 120; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
+    .toast {
+      background: var(--ink); color: #fff; font-size: 12.5px; font-weight: 600;
+      padding: 10px 16px; border-radius: 999px; box-shadow: 0 10px 24px -8px #23201966;
+      animation: toastIn .22s ease; display: flex; align-items: center; gap: 8px;
+    }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   </style>
 </head>
-<body class="flex flex-col min-h-screen">
 
-  <!-- Navbar -->
-  <nav class="sticky top-0 z-50 border-b border-[#1d1d21] bg-[rgba(11,11,13,.95)] backdrop-blur">
-    <div class="container mx-auto px-4 py-3.5 flex items-center justify-between">
-      <h1 class="text-xl md:text-2xl font-extrabold tracking-wide">Ali<span class="text-cyan-400">Find</span></h1>
-      <div class="hidden md:flex gap-7 text-sm text-gray-400">
-        <a href="#" class="hover:text-cyan-400 transition">Home</a>
-        <a href="#katalog" class="hover:text-cyan-400 transition">Katalog</a>
-        <a href="#katalog" class="hover:text-cyan-400 transition">Deal Hari Ini</a>
+<body class="min-h-screen flex flex-col relative">
+
+  <!-- Header -->
+  <header id="site-header" class="sticky top-0 z-50 backdrop-blur bg-[#faf6f0cc] border-b border-[#eadfcd]">
+    <div class="container mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
+      <a href="#" class="display font-bold text-2xl tracking-tight inline-block py-1.5">
+        <span class="text-[#232019]">Ali</span><span class="text-[#e85d4a]">Find</span>
+        <span class="hidden sm:inline text-[11px] font-sans font-semibold uppercase tracking-[0.22em] text-[#6f685c] ml-2 align-middle">BR Picks</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="hero-pill text-[11px] sm:text-xs px-3 py-1.5 rounded-full font-semibold">
+          🇧🇷 Preços em reais (R$)
+        </span>
+        <button id="wish-toggle" aria-label="Ver favoritos"
+          class="hero-pill relative w-10 h-10 rounded-full flex items-center justify-center text-[#6f685c] hover:text-[#e85d4a] transition">
+          <i class="fa-solid fa-heart"></i>
+          <span id="wish-count" class="wish-count hidden-count">0</span>
+        </button>
       </div>
-      <a href="#katalog" class="btn-primary text-white px-5 py-2 rounded-full text-sm font-bold transition">Cek Deal 🔥</a>
     </div>
-  </nav>
+  </header>
 
-  <!-- Urgency Bar (live metrics ala Neon Carbon) -->
-  <div class="urgency-bar py-2.5 px-4">
-    <div class="container mx-auto flex flex-wrap justify-center gap-x-10 gap-y-1 text-xs text-cyan-300 text-center">
-      <div><span class="glow-dot"></span><b class="text-white">2.4K</b> orang berkunjung hari ini</div>
-      <div><span class="glow-dot"></span>Flash sale berakhir <b class="text-white">22:59</b></div>
-      <div><span class="glow-dot"></span><b class="text-white">99%</b> pembeli puas dengan rekomendasi</div>
+  <!-- Hero -->
+  <section aria-label="Apresentação" class="container mx-auto px-4 pt-5 pb-3 md:pt-12 md:pb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_.85fr] gap-5 lg:gap-10 items-center">
+      <!-- Kolom kiri: teks + CTA + statistik bento -->
+      <div>
+        <p class="hero-pill inline-flex items-center text-[11px] sm:text-xs px-3.5 py-1.5 rounded-full mb-3 md:mb-4 font-semibold">
+          <span class="inline-block w-2 h-2 rounded-full bg-[#e85d4a] mr-2 badge-pulse"></span>
+          Atualizado diariamente · Temporada de beleza 2026
+        </p>
+        <h1 class="display text-[1.85rem] leading-[1.08] sm:text-[2rem] md:text-6xl font-bold md:leading-[1.05] tracking-tight mb-2.5 md:mb-4">
+          Os achados do AliExpress<br>
+          <span class="text-[#e85d4a]">que valem</span> seu clique.
+        </h1>
+        <p class="text-[#4a4538] text-[14px] md:text-lg leading-relaxed max-w-xl mb-4 md:mb-6">
+          A gente garimpa o AliExpress por você. Só entram itens com
+          <strong class="text-[#232019]" id="hero-avg-rating">nota média 4.8★</strong>, volume real de pedidos
+          (<strong class="text-[#232019]">1k a 50k+</strong>) e até
+          <strong class="text-[#232019]" id="hero-max-disc">76% de desconto</strong>.
+        </p>
+        <div class="flex flex-wrap items-center gap-2.5 mb-4 md:mb-6">
+          <a href="#vitrine" class="buy-btn text-white font-bold text-sm px-6 py-3 rounded-full transition active:scale-95 shadow-lg shadow-[#e85d4a33] inline-flex items-center gap-2">
+            Ver os achados <i class="fa-solid fa-arrow-down text-xs"></i>
+          </a>
+          <a href="#como-escolhemos" class="font-semibold text-sm px-5 py-2.5 rounded-full border border-[#e2d5c0] text-[#232019] hover:border-[#232019] transition">
+            Como escolhemos
+          </a>
+        </div>
+        <dl class="grid grid-cols-3 gap-2 md:gap-3 max-w-xl">
+          <div class="flex flex-col bg-white border border-[#eadfcd] rounded-2xl px-2.5 py-2.5 md:px-4 md:py-4">
+            <dt class="order-2 text-[11px] uppercase tracking-[0.14em] text-[#7a7264] font-semibold mt-0.5">achados</dt>
+            <dd id="stat-total" class="order-1 stat-num display text-lg md:text-3xl font-bold">—</dd>
+          </div>
+          <div class="flex flex-col bg-white border border-[#eadfcd] rounded-2xl px-2.5 py-2.5 md:px-4 md:py-4">
+            <dt class="order-2 text-[11px] uppercase tracking-[0.14em] text-[#7a7264] font-semibold mt-0.5">nota mín.</dt>
+            <dd id="stat-rating" class="order-1 stat-num display text-lg md:text-3xl font-bold">—</dd>
+          </div>
+          <div class="flex flex-col bg-[#232019] border border-[#232019] rounded-2xl px-2.5 py-2.5 md:px-4 md:py-4">
+            <dt class="order-2 text-[11px] uppercase tracking-[0.14em] text-[#e8d9c3] font-semibold mt-0.5">desconto máx.</dt>
+            <dd id="stat-discount" class="order-1 display text-lg md:text-3xl font-bold text-[#f4c94c]">—</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Kolom kanan: achado do dia (diisi otomatis JS dari data live) -->
+      <div class="hidden lg:block">
+        <div id="hero-spot" class="hero-card rounded-3xl overflow-hidden rotate-1 hover:rotate-0 transition-transform duration-500 cursor-pointer" role="button" tabindex="0" aria-label="Ver achado em destaque">
+          <div class="relative aspect-[4/3] overflow-hidden bg-[#f1eadf]">
+            <img id="hero-spot-img" src="" alt="" class="w-full h-full object-cover" fetchpriority="high">
+            <span class="absolute top-3 left-3 bg-[#232019] text-white text-[11px] font-bold px-3 py-1.5 rounded-full tracking-wide flex items-center gap-1.5">
+              <i class="fa-solid fa-crown text-[#f4c94c] text-[10px]"></i> ACHADO DO DIA
+            </span>
+            <span id="hero-spot-off" class="absolute bottom-3 right-3 price-off text-white text-sm font-extrabold px-3.5 py-1.5 rounded-full"></span>
+          </div>
+          <div class="p-5">
+            <p id="hero-spot-name" class="font-semibold text-[15px] leading-snug line-clamp-2 mb-2.5"></p>
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <div class="flex items-baseline gap-2">
+                  <span id="hero-spot-price" class="text-[#232019] font-extrabold text-2xl"></span>
+                  <span id="hero-spot-orig" class="text-[#7a7264] text-sm line-through"></span>
+                </div>
+                <p id="hero-spot-save" class="save-line text-xs mt-0.5"><i class="fa-solid fa-piggy-bank text-[9px]"></i> <span id="hero-spot-save-text"></span></p>
+              </div>
+              <span class="buy-btn text-white text-xs font-bold px-5 py-2.5 rounded-full whitespace-nowrap">Ver oferta <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i></span>
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-[11px] text-[#6f685c] mt-2.5">Destaque automático: maior desconto da semana</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticker penawaran (data nyata katalog) -->
+  <div class="overflow-hidden bg-[#232019] py-2 select-none" aria-hidden="true">
+    <div class="marquee-track flex gap-10 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.18em] text-[#f4c94c] w-max">
+      <span>🔥 Descontos de até <b class="text-white">76%</b> &nbsp;·&nbsp; 💰 Economia de até <b class="text-white">R$ 442</b> &nbsp;·&nbsp; 🪙 Achados a partir de <b class="text-white">R$ 5,21</b> &nbsp;·&nbsp; ✅ <b class="text-white">34 itens</b> verificados hoje &nbsp;·&nbsp; 🛡️ Proteção ao Comprador AliExpress &nbsp;·&nbsp;</span>
+      <span>🔥 Descontos de até <b class="text-white">76%</b> &nbsp;·&nbsp; 💰 Economia de até <b class="text-white">R$ 442</b> &nbsp;·&nbsp; 🪙 Achados a partir de <b class="text-white">R$ 5,21</b> &nbsp;·&nbsp; ✅ <b class="text-white">34 itens</b> verificados hoje &nbsp;·&nbsp; 🛡️ Proteção ao Comprador AliExpress &nbsp;·&nbsp;</span>
     </div>
   </div>
 
-  <!-- Hero -->
-  <section class="container mx-auto px-4 pt-12 pb-8 md:pt-16 md:pb-12">
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-      <div>
-        <div class="text-cyan-400 text-xs tracking-[3px] uppercase mb-4">Kurasi Produk AliExpress Terbaik</div>
-        <h2 class="text-3xl md:text-5xl font-extrabold leading-tight">Temukan Produk <span class="hero-gradient-text">Terlaris</span> Pilihan Editor</h2>
-        <p class="text-gray-400 mt-5 mb-7 leading-relaxed max-w-lg">Setiap produk kami pilih dari ribuan listing: rating 4.5+, 1000+ orders terbukti, dan harga termurah. Klik langsung beli di AliExpress.</p>
-        <div class="flex flex-wrap gap-3">
-          <a href="#katalog" class="btn-primary text-white px-7 py-3 rounded-full font-bold text-sm transition">Jelajahi Katalog</a>
-          <a href="#katalog" class="border border-[#2c2c33] text-gray-200 px-7 py-3 rounded-full text-sm hover:border-cyan-400 hover:text-cyan-400 transition">Deal Hari Ini</a>
-        </div>
-        <div class="flex gap-8 mt-9 text-center">
-          <div><b class="text-xl md:text-2xl text-cyan-400 block">12+</b><span class="text-[11px] text-gray-500">Produk Terkurasi</span></div>
-          <div><b class="text-xl md:text-2xl text-cyan-400 block">4.8★</b><span class="text-[11px] text-gray-500">Rating Rata-rata</span></div>
-          <div><b class="text-xl md:text-2xl text-cyan-400 block">100K+</b><span class="text-[11px] text-gray-500">Total Orders</span></div>
-        </div>
+  <!-- Promo strip -->
+  <section aria-label="Ofertas em destaque" class="container mx-auto px-4 pt-3 pb-4 md:pt-4 md:pb-6">
+    <div class="hero-card rounded-2xl px-4 py-3 md:px-5 md:py-4 flex flex-wrap items-center gap-x-6 gap-y-1.5">
+      <span class="display text-base md:text-lg font-bold text-[#c9432f]">💄 Semana da Beleza</span>
+      <p class="text-[13px] md:text-sm text-[#6f685c]">Os descontos abaixo já são os melhores do dia.</p>
+      <span class="ml-auto hidden sm:inline-block text-[11px] font-bold uppercase tracking-widest bg-[#232019] text-white rounded-full px-3.5 py-1.5">Novo toda semana</span>
+    </div>
+
+    <!-- Kartu penawaran (diisi otomatis dari katalog, bisa diklik) -->
+    <div class="grid grid-cols-3 gap-2 md:gap-4 mt-3">
+      <button data-offer="desconto" class="offer-card text-left rounded-2xl p-2.5 md:p-4 transition active:scale-[.98]">
+        <span class="offer-ico">💥</span>
+        <span class="block text-[11px] md:text-xs uppercase tracking-[0.12em] font-bold text-[#c9432f] mt-1.5">Maior desconto</span>
+        <span id="offer-disc" class="block display text-lg md:text-2xl font-bold mt-0.5">—</span>
+        <span class="block text-[11px] text-[#6f685c] leading-tight mt-0.5 line-clamp-2" id="offer-disc-name"></span>
+      </button>
+      <button data-offer="economia" class="offer-card text-left rounded-2xl p-2.5 md:p-4 transition active:scale-[.98]">
+        <span class="offer-ico">💰</span>
+        <span class="block text-[11px] md:text-xs uppercase tracking-[0.12em] font-bold text-[#1f7a5c] mt-1.5">Maior economia</span>
+        <span id="offer-save" class="block display text-lg md:text-2xl font-bold mt-0.5">—</span>
+        <span class="block text-[11px] text-[#6f685c] leading-tight mt-0.5 line-clamp-2" id="offer-save-name"></span>
+      </button>
+      <button data-offer="menor" class="offer-card text-left rounded-2xl p-2.5 md:p-4 transition active:scale-[.98]">
+        <span class="offer-ico">🪙</span>
+        <span class="block text-[11px] md:text-xs uppercase tracking-[0.12em] font-bold text-[#8a6d1f] mt-1.5">A partir de</span>
+        <span id="offer-cheap" class="block display text-lg md:text-2xl font-bold mt-0.5">—</span>
+        <span class="block text-[11px] text-[#6f685c] leading-tight mt-0.5 line-clamp-2" id="offer-cheap-name"></span>
+      </button>
+    </div>
+    <p class="text-center text-[11px] text-[#6f685c] mt-2">Toque numa oferta para ver os itens ordenados</p>
+  </section>
+
+  <!-- Marquee kategori -->
+  <div class="overflow-hidden border-y border-[#eadfcd] bg-white/70 py-2.5 mb-3 select-none" aria-hidden="true">
+    <div class="marquee-track flex gap-8 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] text-[#5f5849] w-max">
+      <span>Beleza ✦ Cílios ✦ Pele ✦ Maquiagem ✦ Cabelo ✦ Unhas ✦ Cozinha ✦ Joias ✦ Em alta ✦&nbsp;</span>
+      <span>Beleza ✦ Cílios ✦ Pele ✦ Maquiagem ✦ Cabelo ✦ Unhas ✦ Cozinha ✦ Joias ✦ Em alta ✦&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- Search & Filter -->
+  <section aria-label="Filtro de categorias" class="container mx-auto px-4 sticky filter-sticky z-40 bg-[#faf6f0f2] pt-1.5 pb-2.5 md:pb-4">
+    <div class="flex flex-col md:flex-row gap-2.5 md:gap-3 items-stretch md:items-center">
+      <div class="relative w-full md:max-w-xs">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[#b3a893] text-sm"></i>
+        <input id="search-input" aria-label="Buscar achados" type="text" placeholder="Buscar achados…"
+          class="input-soft w-full pl-10 pr-4 py-3 rounded-full text-sm">
       </div>
-      <div class="hidden md:block">
-        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=700&q=80" alt="Produk unggulan AliFind"
-             class="rounded-2xl border border-[#1d1d21] shadow-2xl w-full object-cover aspect-[4/3]"
-             onerror="this.style.display='none'">
-      </div>
+      <div id="filter-buttons" class="flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0"></div>
     </div>
   </section>
 
-  <!-- Filter + Grid -->
-  <section id="katalog" class="container mx-auto px-4 pb-10">
-    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-      <h2 class="text-2xl md:text-3xl font-extrabold">Koleksi Terlaris</h2>
-      <div id="search-wrap" class="relative w-full md:w-72">
-        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-        <input id="search-input" type="text" placeholder="Cari produk..."
-               class="w-full bg-[#121216] border border-[#1e1e24] rounded-full py-2.5 pl-10 pr-4 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition">
-      </div>
-    </div>
-    <div id="filter-buttons" class="flex flex-wrap gap-2.5 mb-8">
-      <button class="filter-btn active px-5 py-1.5 rounded-full text-xs md:text-sm font-medium" data-category="all">Semua</button>
+  <!-- Product grid -->
+  <main id="vitrine" class="container mx-auto px-4 pb-14 flex-1 scroll-mt-32">
+    <h2 id="vitrine-title" class="sr-only">Achados verificados desta semana</h2>
+    <p class="text-[11px] text-[#6f685c] mb-2 leading-snug">
+      <i class="fa-solid fa-circle-info mr-1 text-[#b3a893]"></i>
+      Divulgação: AliFind participa do programa de afiliados do AliExpress e pode receber comissão por compras indicadas.
+      <span id="price-date-label"></span>
+    </p>
+    <div class="flex items-end justify-between gap-3 mb-4">
+      <h2 class="display text-2xl font-bold">Vitrine da semana</h2>
+      <span class="section-line mb-1.5 hidden sm:block"></span>
     </div>
 
-    <!-- Skeleton Loading -->
-    <div id="skeleton-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      ${Array(8).fill(`
-        <div class="bg-[#121216] rounded-2xl overflow-hidden border border-[#1e1e24]">
-          <div class="skeleton aspect-square w-full"></div>
-          <div class="p-4 space-y-2">
-            <div class="skeleton h-3 rounded w-full"></div>
-            <div class="skeleton h-3 rounded w-3/4"></div>
-            <div class="skeleton h-5 rounded w-1/2 mt-1"></div>
-            <div class="skeleton h-8 rounded-full w-full mt-2"></div>
+    <!-- Controles: jumlah hasil + ordenação -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <p id="result-count" aria-live="polite" aria-atomic="true" class="text-xs font-semibold text-[#6f685c]"></p>
+      <label class="flex items-center gap-2 text-xs text-[#6f685c]">
+        <span class="hidden sm:inline font-semibold">Ordenar por:</span>
+        <i class="fa-solid fa-arrow-down-wide-short text-[#b3a893]"></i>
+        <select id="sort-select" aria-label="Ordenar achados" class="input-soft rounded-full pl-3 pr-8 py-2 text-xs font-semibold cursor-pointer">
+          <option value="relevancia">Relevância</option>
+          <option value="desconto">Maior desconto</option>
+          <option value="menor">Menor preço</option>
+          <option value="maior">Maior preço</option>
+          <option value="nota">Melhor nota</option>
+          <option value="vendidos">Mais vendidos</option>
+        </select>
+      </label>
+    </div>
+    <div id="skeleton-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+      <div class="skeleton h-72 md:h-80 rounded-2xl"></div>
+      <div class="skeleton h-72 md:h-80 rounded-2xl"></div>
+      <div class="skeleton h-72 md:h-80 rounded-2xl"></div>
+      <div class="skeleton h-72 md:h-80 rounded-2xl"></div>
+      <div class="skeleton h-72 md:h-80 rounded-2xl hidden md:block"></div>
+      <div class="skeleton h-72 md:h-80 rounded-2xl hidden md:block"></div>
+      <div class="skeleton h-72 md:h-80 rounded-2xl hidden lg:block"></div>
+      <div class="skeleton h-72 md:h-80 rounded-2xl hidden lg:block"></div>
+    </div>
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"></div>
+    <div id="empty-state" class="hidden text-center py-24">
+      <i class="fa-solid fa-box-open text-6xl text-[#e2d5c0] mb-5"></i>
+      <p class="text-lg font-semibold text-[#232019]">Nenhum achado encontrado.</p>
+      <p class="text-sm text-[#6f685c] mt-1.5">Tente outra palavra-chave ou categoria.</p>
+    </div>
+  </main>
+
+  <!-- Como a gente escolhe -->
+  <section id="como-escolhemos" aria-label="Como escolhemos" class="border-y border-[#eadfcd] bg-white/60 scroll-mt-24">
+    <div class="container mx-auto px-4 py-12">
+      <h2 class="display text-2xl font-bold mb-8">Como a gente escolhe</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="flex gap-4">
+          <span class="display text-3xl font-bold text-[#94856a]">01</span>
+          <div>
+            <h3 class="font-bold text-[15px] mb-1.5">Dados primeiro</h3>
+            <p class="text-sm text-[#6f685c] leading-relaxed">Acompanhamos rankings de best-sellers e o que está viralizando. Só entra item com volume real de pedidos — hoje de 1k a 50k+.</p>
           </div>
         </div>
-      `).join('')}
-    </div>
-
-    <!-- Product Grid -->
-    <div id="product-grid" class="hidden grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-
-    <!-- Empty State -->
-    <div id="empty-state" class="hidden text-center py-16 text-gray-500">
-      <i class="fa-solid fa-box-open text-5xl mb-4 text-gray-700"></i>
-      <p class="text-lg font-medium">Produk tidak ditemukan</p>
-      <p class="text-sm mt-1">Coba kata kunci lain</p>
+        <div class="flex gap-4">
+          <span class="display text-3xl font-bold text-[#94856a]">02</span>
+          <div>
+            <h3 class="font-bold text-[15px] mb-1.5">Barra de nota rigorosa</h3>
+            <p class="text-sm text-[#6f685c] leading-relaxed" id="how-strict-line">Nota média do catálogo 4.8★ — a nota mínima exibida aqui sempre vem da nossa base, verificada contra as avaliações reais do AliExpress. Sem réplica de marca, sem promessa furada.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="display text-3xl font-bold text-[#94856a]">03</span>
+          <div>
+            <h3 class="font-bold text-[15px] mb-1.5">Preço conferido</h3>
+            <p class="text-sm text-[#6f685c] leading-relaxed">O desconto é calculado sobre o preço de referência do próprio anúncio, e o preço em R$ é conferido na data indicada na vitrine — pra "oferta" ser oferta de verdade.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Value Props -->
-  <section class="container mx-auto px-4 py-10 border-t border-[#1a1a1f]">
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="bg-gradient-to-b from-[#121216] to-[#0e0e11] border border-[#1e1e24] rounded-2xl p-7">
-        <div class="text-3xl mb-4">🏆</div>
-        <h3 class="font-bold text-lg mb-2">Kurasi Berbasis Data</h3>
-        <p class="text-sm text-gray-400 leading-relaxed">Hanya produk 4.5+ rating & 1000+ orders yang masuk daftar — disaring otomatis dari tren AliExpress.</p>
+  <!-- FAQ -->
+  <section aria-label="Informações de compra" class="container mx-auto px-4 py-12">
+    <h2 class="display text-2xl font-bold mb-6">Bom saber</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="hero-card rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-[#fdf1ee] text-[#e85d4a] flex items-center justify-center mb-3"><i class="fa-solid fa-truck-fast"></i></div>
+        <h3 class="font-bold text-sm mb-1.5">Entrega no Brasil</h3>
+        <p class="text-xs text-[#6f685c] leading-relaxed">Maioria chega em 7–15 dias com rastreio. O prazo mostrado no AliExpress já considera seu CEP.</p>
       </div>
-      <div class="bg-gradient-to-b from-[#121216] to-[#0e0e11] border border-[#1e1e24] rounded-2xl p-7">
-        <div class="text-3xl mb-4">⚡</div>
-        <h3 class="font-bold text-lg mb-2">Langsung ke Sumber</h3>
-        <p class="text-sm text-gray-400 leading-relaxed">Satu klik menuju halaman resmi AliExpress. Tanpa markup harga — komisi kami dari program affiliate.</p>
+      <div class="hero-card rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-[#fdf1ee] text-[#e85d4a] flex items-center justify-center mb-3"><i class="fa-solid fa-shield-heart"></i></div>
+        <h3 class="font-bold text-sm mb-1.5">Proteção ao comprador</h3>
+        <p class="text-xs text-[#6f685c] leading-relaxed">Toda compra tem Protecao ao Comprador: reembolso se nao chegar ou vier diferente do anúncio.</p>
       </div>
-      <div class="bg-gradient-to-b from-[#121216] to-[#0e0e11] border border-[#1e1e24] rounded-2xl p-7">
-        <div class="text-3xl mb-4">🛡️</div>
-        <h3 class="font-bold text-lg mb-2">Aman & Transparan</h3>
-        <p class="text-sm text-gray-400 leading-relaxed">Kami tidak menyimpan data pembeli. Semua transaksi terjadi di platform AliExpress.</p>
+      <div class="hero-card rounded-2xl p-5">
+        <div class="w-9 h-9 rounded-full bg-[#fdf1ee] text-[#e85d4a] flex items-center justify-center mb-3"><i class="fa-solid fa-user-shield"></i></div>
+        <h3 class="font-bold text-sm mb-1.5">Sua privacidade</h3>
+        <p class="text-xs text-[#6f685c] leading-relaxed">Nao guardamos dados de compra. O checkout acontece 100% no AliExpress.</p>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-[#1a1a1f] py-8 mt-auto">
-    <div class="container mx-auto px-4 text-center space-y-2.5">
-      <p class="font-extrabold tracking-wide text-lg">Ali<span class="text-cyan-400">Find</span></p>
-      <p class="text-xs max-w-md mx-auto text-gray-500">Kurasi produk AliExpress terbaik: aksesoris, perhiasan, jam tangan.</p>
-      <p class="text-[11px] text-gray-600">Website ini berpartisipasi dalam program afiliasi AliExpress. Komisi diperoleh dari pembelian yang memenuhi syarat tanpa biaya tambahan untuk pembeli.</p>
-      <p class="text-xs text-gray-600">&copy; 2026 AliFind. All rights reserved.</p>
+  <footer class="border-t border-[#eadfcd] bg-white/50 py-9 mt-auto">
+    <div class="container mx-auto px-4 text-center space-y-3">
+      <p class="display font-bold text-xl">Ali<span class="text-[#e85d4a]">Find</span></p>
+      <p class="text-xs max-w-md mx-auto text-[#6f685c]">Achados AliExpress em alta — beleza, joias, casa, gadget — curados de dados reais de venda.</p>
+
+      <!-- Disclosure de afiliado (FTC 16 CFR 255.5 — versão completa) -->
+      <p class="text-[12.5px] max-w-lg mx-auto text-[#6f685c] leading-relaxed">AliFind participa do Programa de Afiliados do AliExpress. Todo link de compra é um link de afiliado: podemos receber comissão em compras qualificadas, sem custo extra para você. <a href="legal/divulgacao-afiliado" class="text-[#c9432f] font-bold underline inline-block px-1 py-0.5">Saiba mais</a>.</p>
+
+      <!-- Links legais -->
+      <nav class="flex flex-wrap justify-center gap-x-3 gap-y-0.5 text-[13px] font-semibold text-[#6f685c] pt-1.5" aria-label="Links legais">
+        <a href="legal/privacidade" class="px-2 py-1.5 rounded-lg hover:text-[#c9432f] transition">Privacidade</a>
+        <a href="legal/cookies" class="px-2 py-1.5 rounded-lg hover:text-[#c9432f] transition">Cookies</a>
+        <a href="legal/termos" class="px-2 py-1.5 rounded-lg hover:text-[#c9432f] transition">Termos de Uso</a>
+        <a href="legal/divulgacao-afiliado" class="px-2 py-1.5 rounded-lg hover:text-[#c9432f] transition">Divulgação de Afiliado</a>
+        <a href="legal/contato" class="px-2 py-1.5 rounded-lg hover:text-[#c9432f] transition">Contato</a>
+        <button id="cookie-config" class="px-2 py-1.5 rounded-lg hover:text-[#c9432f] transition underline decoration-dotted">Configurar cookies</button>
+      </nav>
+
+      <p class="text-xs text-[#7a7264] pt-1">&copy; 2026 AliFind. Todos os direitos reservados.</p>
     </div>
   </footer>
 
+  <script src="js/search-map.js" defer></script>
+  <script src="js/descriptions.js" defer></script>
   <script src="js/app.js" defer></script>
+  <!-- Tombol kembali ke atas -->
+  <button id="back-top" aria-label="Voltar ao topo"
+    class="back-top hero-card fixed bottom-5 right-5 z-[80] w-11 h-11 rounded-full text-[#232019] flex items-center justify-center transition">
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- Toast Notification Wrapper -->
+  <div id="toast-wrap" aria-live="polite"></div>
+
+  <!-- Product Detail Modal (Bottom Sheet on mobile, Dialog on desktop) -->
+  <div id="sheet-backdrop" class="sheet-backdrop"></div>
+  <div id="product-sheet" class="sheet" role="dialog" aria-modal="true" aria-label="Detalhes do achado">
+    <div class="sheet-grabber"></div>
+    <div class="p-5 md:p-8 pb-0">
+      <div class="flex items-center justify-between gap-3 pb-4 border-b border-[#eadfcd]">
+        <span id="sheet-badge" class="text-[11px] font-bold px-3 py-1 rounded-full tracking-wide bg-[#232019] text-white"></span>
+        <button id="sheet-close" aria-label="Fechar" class="ml-auto flex-shrink-0 w-8 h-8 rounded-full bg-[#f1eadf] text-[#6f685c] hover:text-[#232019] flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-5">
+        <!-- Kolom Gambar -->
+        <div class="relative aspect-square rounded-2xl overflow-hidden bg-[#f1eadf] border border-[#eadfcd]">
+          <img id="sheet-img" alt="" class="w-full h-full object-cover" decoding="async">
+          <span id="sheet-discount" class="absolute top-3 left-3 price-off text-white text-xs font-extrabold px-3 py-1.5 rounded-full"></span>
+        </div>
+
+        <!-- Kolom Detail + CTA -->
+        <div class="flex flex-col">
+          <div id="sheet-category" class="text-xs text-[#7a7264] uppercase tracking-[0.16em] mb-2 font-semibold"></div>
+          <h2 id="sheet-title" class="display text-xl md:text-2xl font-bold leading-snug mb-2.5">Detalhes do produto</h2>
+
+          <!-- Preço no fluxo do conteúdo: rola junto, não fica perseguindo o dedo -->
+          <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 mb-1.5">
+            <span id="sheet-price" class="text-[#232019] font-extrabold text-2xl md:text-3xl"></span>
+            <span id="sheet-orig-price" class="text-[#7a7264] text-sm md:text-base line-through"></span>
+          </div>
+          <p id="sheet-save" class="save-line text-xs md:text-sm mb-3"><i class="fa-solid fa-piggy-bank text-[9px]"></i> <span id="sheet-save-text"></span></p>
+
+          <p id="sheet-desc" class="text-xs text-[#6f685c] leading-relaxed mb-4"></p>
+
+          <div class="flex items-center gap-3 text-xs text-[#6f685c] mb-4 pb-3 border-b border-[#eadfcd]">
+            <span class="text-[#e8a13d] font-bold flex items-center gap-1">
+              <i class="fa-solid fa-star text-xs"></i>
+              <span id="sheet-rating"></span>
+            </span>
+            <span>·</span>
+            <span id="sheet-sold"></span>
+            <span>·</span>
+            <span class="text-[#1f7a5c] font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-shield-halved"></i> Proteção AliExpress
+            </span>
+          </div>
+
+          <!-- Highlight kurasi (dinamis per produk) -->
+          <div class="bg-[#faf6f0] border border-[#eadfcd] rounded-xl p-3.5 mb-4 text-xs text-[#6f685c] leading-relaxed">
+            <p class="font-bold text-[#232019] mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-wand-magic-sparkles text-[#e85d4a]"></i> Por que está na curadoria:
+            </p>
+            <p id="sheet-why"></p>
+          </div>
+
+          <!-- Produk terkait: kategori sama + lagi hits -->
+          <div id="sheet-related" class="mb-4 pt-3 border-t border-[#eadfcd]">
+            <div class="flex items-center justify-between mb-2.5">
+              <h3 class="font-bold text-xs text-[#232019]"><i class="fa-solid fa-fire text-[#e85d4a] mr-1"></i>Você também vai gostar</h3>
+              <span class="text-[10.5px] uppercase tracking-widest text-[#6f685c] font-bold">em alta</span>
+            </div>
+            <div id="sheet-related-list" class="flex gap-2.5 overflow-x-auto no-scrollbar -mx-1 px-1 pb-1"></div>
+          </div>
+
+          <!-- Garansi & kepercayaan: bikin pembeli mantap sebelum klik Comprar -->
+          <div id="sheet-trust" class="pt-3 pb-2 border-t border-[#eadfcd] space-y-3">
+            <div class="trust-row">
+              <span class="trust-ico"><i class="fa-solid fa-truck-fast"></i></span>
+              <div class="text-xs text-[#6f685c] leading-relaxed">
+                <p class="font-bold text-[#232019] mb-0.5">Chega no Brasil com rastreio</p>
+                <p>A maioria chega em 7–15 dias úteis. O prazo e o frete aparecem no AliExpress conforme seu CEP.</p>
+              </div>
+            </div>
+            <div class="trust-row">
+              <span class="trust-ico"><i class="fa-solid fa-rotate-left"></i></span>
+              <div class="text-xs text-[#6f685c] leading-relaxed">
+                <p class="font-bold text-[#232019] mb-0.5">Devolução sem dor de cabeça</p>
+                <p>Comprou e não gostou? <span id="sheet-trust-name" class="font-semibold"></span> tem Proteção ao Comprador: reembolso integral via AliExpress.</p>
+              </div>
+            </div>
+            <div class="trust-row">
+              <span class="trust-ico"><i class="fa-solid fa-lock"></i></span>
+              <div class="text-xs text-[#6f685c] leading-relaxed">
+                <p class="font-bold text-[#232019] mb-0.5">Pagamento 100% no AliExpress</p>
+                <p>AliFind só indica o link. Checkout, dados e cartão ficam só com o AliExpress.</p>
+              </div>
+            </div>
+            <p id="sheet-trust-date" class="text-[11px] text-[#7a7264] leading-relaxed pt-1"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA bar tertempel permanen di dasar sheet -->
+      <div class="sheet-cta-bar -mx-5 md:-mx-8 px-4 py-3 md:px-8 bg-white/95 backdrop-blur border-t border-[#eadfcd]">
+        <div class="flex items-center justify-between gap-2 md:gap-3 max-w-xl mx-auto">
+          <a id="sheet-buy-link" href="#" target="_blank" rel="noopener noreferrer sponsored"
+            class="buy-btn text-white text-center py-3 px-5 rounded-full text-sm font-bold transition active:scale-95 shadow-md shadow-[#e85d4a33] flex items-center justify-center gap-2 whitespace-nowrap flex-1">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Comprar no AliExpress</span>
+          </a>
+          <button id="sheet-fav-btn" aria-label="Salvar nos favoritos"
+            class="w-11 h-11 rounded-full border border-[#eadfcd] bg-white text-[#6f685c] hover:text-[#e85d4a] flex items-center justify-center transition active:scale-90 flex-shrink-0">
+            <i class="fa-solid fa-heart text-base"></i>
+          </button>
+        </div>
+        <!-- FTC 16 CFR 255.5: disclosure menempel pada tombol beli, bukan hanya footer -->
+        <p class="text-[10.5px] text-[#5f5849] text-center mt-1.5 leading-tight">Link de afiliado — podemos receber comissão. Preço final é o do AliExpress.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Drawer (Right Slide) -->
+  <div id="wish-backdrop" class="sheet-backdrop"></div>
+  <div id="wish-drawer" class="wish-drawer" role="dialog" aria-modal="true" aria-label="Seus favoritos">
+    <div class="p-4 border-b border-[#eadfcd] flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-heart text-[#e85d4a]"></i>
+        <h2 class="font-bold text-base text-[#232019]">Seus Favoritos</h2>
+        <span id="wish-drawer-count" class="text-xs text-[#6f685c] font-normal"></span>
+      </div>
+      <button id="wish-close" aria-label="Fechar" class="w-8 h-8 rounded-full bg-[#f1eadf] text-[#6f685c] hover:text-[#232019] flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Isi list -->
+    <div id="wish-items" class="flex-1 overflow-y-auto p-4 space-y-3">
+      <!-- Item list di-render dinamis oleh JS -->
+    </div>
+
+    <!-- Footer drawer -->
+    <div id="wish-footer" class="p-4 border-t border-[#eadfcd] bg-white/60">
+      <p class="text-[10.5px] text-[#5f5849] text-center mb-2 leading-tight">Todo botão "Comprar" acima é link de afiliado.</p>
+      <button id="wish-clear" class="w-full text-center text-xs text-[#7a7264] hover:text-[#c9432f] py-2.5 transition font-medium">
+        <i class="fa-solid fa-trash-can mr-1"></i> Limpar todos os favoritos
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       COOKIE CONSENT BANNER (pt-BR)
+       GDPR/ePrivacy + LGPD + CJEU C-673/17 "Planet49":
+       · tanpa pre-ticked, tanpa cookie analitik sebelum persetujuan
+       · tombol "Rejeitar todos" SETARA dengan "Aceitar todos"
+         (ukuran, padding, dan bobot font sama — hanya warna yang beda
+          agar tetap konsisten dengan identitas visual situs)
+       ══════════════════════════════════════════════════════════════ -->
+  <div id="cookie-banner" class="hidden fixed inset-x-0 bottom-0 z-[999] border-t border-[#eadfcd] bg-[#faf6f0fa] backdrop-blur"
+       role="dialog" aria-live="polite" aria-label="Preferências de cookies">
+    <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center gap-3">
+      <p class="text-xs text-[#6f685c] leading-relaxed flex-1">
+        Usamos cookies de medição para entender quais achados funcionam melhor. Você pode aceitar ou recusar — recusar é igualmente fácil. Nenhuma medição é ativada antes da sua escolha.
+        <a href="legal/cookies" class="text-[#c9432f] underline font-semibold inline-block px-1 py-1.5 rounded">Política de cookies</a>
+      </p>
+      <div class="grid grid-cols-2 gap-2.5 w-full md:flex md:w-auto flex-shrink-0">
+        <!-- Planet49/AEPD: "Rejeitar" wajib sama menonjol dengan "Aceitar".
+             Keduanya solid, ukuran & bobot font identik — hanya warna beda. -->
+        <button id="cookie-reject" type="button"
+          class="px-5 py-2.5 rounded-full text-xs font-bold text-white bg-[#6f685c] hover:bg-[#5a544a] transition text-center whitespace-nowrap md:w-[145px]">
+          Rejeitar todos
+        </button>
+        <button id="cookie-accept" type="button"
+          class="px-5 py-2.5 rounded-full text-xs font-bold text-white bg-[#232019] hover:bg-[#3a3529] transition text-center whitespace-nowrap md:w-[145px]">
+          Aceitar todos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ── Consentimento: simpan pilihan, muat GA4 hanya bila "granted" ──
+  (function () {
+    var KEY = 'alifind_consent';
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+
+    var stored = null;
+    try { stored = localStorage.getItem(KEY); } catch (e) {}
+
+    // Belum ada pilihan → tampilkan banner. Sudah ada → jangan ganggu lagi.
+    if (stored !== 'granted' && stored !== 'denied') banner.classList.remove('hidden');
+
+    function loadGA() {
+      if (window.__alifindGALoaded) return;   // jangan muat dua kali
+      window.__alifindGALoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HYQ30MH80M';
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      if (typeof window.gtag !== 'function') {
+        window.gtag = function () { window.dataLayer.push(arguments); };
+      }
+      window.gtag('js', new Date());
+      window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      window.gtag('config', 'G-HYQ30MH80M', { anonymize_ip: true });
+    }
+
+    function decide(value) {
+      try { localStorage.setItem(KEY, value); } catch (e) {}
+      banner.classList.add('hidden');
+      if (value === 'granted') loadGA();
+    }
+
+    document.getElementById('cookie-accept')?.addEventListener('click', function () { decide('granted'); });
+    document.getElementById('cookie-reject')?.addEventListener('click', function () { decide('denied'); });
+
+    // "Configurar cookies" di footer → tampilkan banner lagi (hak menarik persetujuan)
+    document.getElementById('cookie-config')?.addEventListener('click', function () {
+      banner.classList.remove('hidden');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
+  })();
+  </script>
+
 </body>
 </html>

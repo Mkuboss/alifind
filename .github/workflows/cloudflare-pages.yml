@@ -1,10 +1,8 @@
 name: Deploy to Cloudflare Pages
-
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   workflow_dispatch:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,12 +11,19 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Deploy to Cloudflare Pages
+      - name: Pilih project target
+        id: pick
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "project=alifind" >> "$GITHUB_OUTPUT"
+          else
+            echo "project=alifind-preview" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Deploy
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: alifind
+          projectName: ${{ steps.pick.outputs.project }}
           directory: .
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}

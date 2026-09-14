@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Contato e Direitos do Titular — AliFind</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/tw.css">
+  <style>
+    :root { --paper: #faf6f0; --card: #ffffff; --ink: #232019; --ink-soft: #6f685c; --coral: #e85d4a; --sand: #f0e7d8; }
+    body { background: var(--paper); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; }
+    .display { font-family: 'Fraunces', Georgia, serif; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="border-b border-[#eadfcd] bg-[#faf6f0cc] backdrop-blur py-4">
+    <div class="container mx-auto px-4 flex items-center justify-between">
+      <a href="/" class="display font-bold text-xl"><span class="text-[#232019]">Ali</span><span class="text-[#c9432f]">Find</span></a>
+      <a href="/" class="text-xs text-[#6f685c] hover:text-[#a8331f] font-semibold">← Voltar à vitrine</a>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-10 max-w-2xl flex-1 space-y-6 text-sm leading-relaxed">
+    <h1 class="display text-3xl font-bold text-[#232019]">Contato</h1>
+    <p>Canal oficial para dúvidas sobre a curadoria, solicitações da LGPD (Art. 18) e contato com o responsável pelo site.</p>
+
+    <div class="bg-white border border-[#eadfcd] rounded-2xl p-6 space-y-3">
+      <!-- Email di-encode SENDIRI dengan format Cloudflare email-protection.
+           Alasan: fitur Email Obfuscation zona mengubah email di server produksi,
+           sehingga produksi != preview. Dengan encode manual di sumber, kedua
+           deployment identik; decoder resmi (/cdn-cgi/scripts/.../email-decode.min.js)
+           tersedia di semua zona Pages dan mengembalikannya jadi teks asli di browser. -->
+      <p><strong class="text-[#232019]">E-mail:</strong> <a href="/cdn-cgi/l/email-protection#5f1e33363936313b6d6d666a1f38323e3633713c3032" class="text-[#c9432f] underline"><span class="__cf_email__" data-cfemail="43022f2a252a2d2771717a7603242e222a2f6d202c2e">[email&#160;protected]</span></a></p>
+      <p class="text-xs text-[#6f685c]">Prazo de resposta a solicitações da LGPD: até 15 dias (Art. 41, §2º).</p>
+    </div>
+
+    <h2 class="display text-xl font-bold text-[#232019]">Para que serve este canal</h2>
+    <ul class="list-disc pl-5 space-y-2 text-[#4a4538]">
+      <li>Solicitar confirmação, acesso, correção ou eliminação de dados pessoais (LGPD, Art. 18).</li>
+      <li>Revogar consentimento de medição/analytics.</li>
+      <li>Reportar um produto com preço desatualizado ou link quebrado.</li>
+      <li>Dúvidas sobre a relação de afiliado com o AliExpress.</li>
+    </ul>
+
+    <h2 class="display text-xl font-bold text-[#232019]">Para problemas com pedidos</h2>
+    <p>Como o AliFind não vende produtos, cobranças, entregas e devoluções devem ser tratadas <strong>diretamente com o AliExpress</strong>, que oferece proteção ao comprador e canais próprios de disputa em seu app/site.</p>
+
+    <p class="text-xs text-[#5f5849] pt-4 border-t border-[#eadfcd]">Última atualização: setembro de 2026.</p>
+  </main>
+
+  <footer class="border-t border-[#eadfcd] bg-white/50 py-6 text-center text-xs text-[#5f5849]">
+    <p>&copy; 2026 AliFind. Todos os direitos reservados.</p>
+  </footer>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+</body>
+</html>

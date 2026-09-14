@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Política de Cookies — AliFind</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/tw.css">
+  <style>
+    :root { --paper: #faf6f0; --card: #ffffff; --ink: #232019; --ink-soft: #6f685c; --coral: #e85d4a; --sand: #f0e7d8; }
+    body { background: var(--paper); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; }
+    .display { font-family: 'Fraunces', Georgia, serif; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="border-b border-[#eadfcd] bg-[#faf6f0cc] backdrop-blur py-4">
+    <div class="container mx-auto px-4 flex items-center justify-between">
+      <a href="/" class="display font-bold text-xl"><span class="text-[#232019]">Ali</span><span class="text-[#c9432f]">Find</span></a>
+      <a href="/" class="text-xs text-[#6f685c] hover:text-[#a8331f] font-semibold">← Voltar à vitrine</a>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-10 max-w-2xl flex-1 space-y-6 text-sm leading-relaxed">
+    <h1 class="display text-3xl font-bold text-[#232019]">Política de Cookies</h1>
+    <p>Em conformidade com a LGPD e as melhores práticas internacionais (jurisprudência CJEU C-673/17 Planet49), este site <strong>não instala cookies não essenciais sem seu consentimento prévio, livre e informado</strong>. Rejeitar é tão fácil quanto aceitar.</p>
+
+    <h2 class="display text-xl font-bold text-[#232019]">Tecnologias que utilizamos</h2>
+    <div class="bg-white border border-[#eadfcd] rounded-2xl p-6 space-y-4">
+      <div>
+        <p class="font-bold text-[#232019]">1. Técnicas e Essenciais (isentas de consentimento):</p>
+        <p class="text-xs text-[#6f685c] mt-1">Armazenamento local (LocalStorage) para salvar sua escolha sobre cookies e seus itens favoritos na lista de desejos. Não rastreiam você entre sites.</p>
+      </div>
+      <div>
+        <p class="font-bold text-[#232019]">2. Analíticas e Medição (opcionais):</p>
+        <p class="text-xs text-[#6f685c] mt-1">Google Analytics 4 — mede acessos de forma anônima e agregada para melhorar a curadoria. <strong>Só carrega se você clicar em "Aceitar todos"</strong> no banner inicial.</p>
+      </div>
+      <div>
+        <p class="font-bold text-[#232019]">3. Cookies de terceiros (AliExpress):</p>
+        <p class="text-xs text-[#6f685c] mt-1">Ao clicar em um link de produto e seguir para o AliExpress, a plataforma de destino aplica sua própria política de cookies para registrar a compra e atribuir comissões.</p>
+      </div>
+    </div>
+
+    <h2 class="display text-xl font-bold text-[#232019]">Como revogar ou alterar seu consentimento</h2>
+    <p>Você pode alterar sua escolha a qualquer momento clicando no botão abaixo:</p>
+    <div class="pt-2">
+      <button id="revoke-btn" class="px-5 py-2.5 rounded-full text-xs font-bold border border-[#e85d4a] text-[#c9432f] hover:bg-[#e85d4a] hover:text-white transition">
+        Revogar e redefinir minhas preferências de cookies
+      </button>
+    </div>
+
+    <p class="text-xs text-[#5f5849] pt-4 border-t border-[#eadfcd]">Última atualização: setembro de 2026.</p>
+  </main>
+
+  <footer class="border-t border-[#eadfcd] bg-white/50 py-6 text-center text-xs text-[#5f5849]">
+    <p>&copy; 2026 AliFind. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    document.getElementById('revoke-btn')?.addEventListener('click', function() {
+      try {
+        localStorage.removeItem('alifind_consent');
+        alert('Preferências redefinidas com sucesso. A página será recarregada.');
+        location.reload();
+      } catch (e) {}
+    });
+  </script>
+</body>
+</html>
