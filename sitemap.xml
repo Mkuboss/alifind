@@ -2,127 +2,121 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mku-api.xyz/</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Auto</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/auto/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Beauty</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/beleza/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Gadget</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/cabelo/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Hair</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/casa/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Home</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/cilios/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Jewelry</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/cozinha/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Kitchen</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/em-alta/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Lashes</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/ferramentas/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Makeup</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/gadgets/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Nails</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/joias/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Outdoor</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/maquiagem/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Skincare</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/organizacao/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Storage</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/skincare/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mku-api.xyz/?cat=Tools</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://mku-api.xyz/?cat=Trending</loc>
-    <lastmod>2026-09-14</lastmod>
+    <loc>https://mku-api.xyz/categoria/unhas/</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mku-api.xyz/legal/contato</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://mku-api.xyz/legal/cookies</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://mku-api.xyz/legal/divulgacao-afiliado</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://mku-api.xyz/legal/privacidade</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://mku-api.xyz/legal/termos</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>

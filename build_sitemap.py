@@ -55,18 +55,18 @@ def main() -> None:
     home_lm = lastmod(ROOT / "index.html")
     entries.append(url_entry(f"{SITE}/", home_lm, "daily", "1.0"))
 
-    # 2. Halaman kategori — hanya kategori yang benar-benar punya produk
-    products_file = ROOT / "data" / "products.json"
-    data_lm = lastmod(products_file)
-    cats = []
-    try:
-        products = json.loads(products_file.read_text(encoding="utf-8"))
-        cats = sorted({c for p in products for c in (p.get("categories") or []) if c})
-    except Exception as e:
-        print(f"[warn] gagal baca products.json: {e}")
+    # 2. Halaman kategori (URL bersih) — dibaca dari folder categoria/
+    cat_dir = ROOT / "categoria"
+    cat_urls = []
+    if cat_dir.is_dir():
+        for f in sorted(cat_dir.glob("*/index.html")):
+            slug = f.parent.name
+            cat_urls.append((f"{SITE}/categoria/{slug}/", lastmod(f), "daily", "0.8"))
+    # Fallback: kalau folder belum dibangun, jangan output ?cat= sama sekali
+    # (query-param = URL duplikat, tidak SEO-friendly).
 
-    for c in cats:
-        entries.append(url_entry(f"{SITE}/?cat={quote(c)}", data_lm, "daily", "0.8"))
+    for loc, lm, cf, pr in cat_urls:
+        entries.append(url_entry(loc, lm, cf, pr))
 
     # 3. Halaman legal
     legal_dir = ROOT / "legal"
@@ -87,7 +87,7 @@ def main() -> None:
     out.write_text(xml, encoding="utf-8")
     n_legal = len(list(legal_dir.glob("*.html"))) if legal_dir.is_dir() else 0
     print(f"sitemap.xml ditulis: {len(entries)} URL "
-          f"(1 homepage + {len(cats)} kategori + {n_legal} legal)")
+          f"(1 homepage + {len(cat_urls)} kategori + {n_legal} legal)")
 
 
 if __name__ == "__main__":
