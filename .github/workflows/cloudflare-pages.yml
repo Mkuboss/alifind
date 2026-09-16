@@ -11,6 +11,10 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v4
+      - name: Noindex untuk preview (live tetap index, follow)
+        if: github.ref_name != 'main'
+        run: |
+          find . -name '*.html' -exec sed -i 's/content="index, follow"/content="noindex, follow"/g' {} +
       - name: Pilih project target
         id: pick
         run: |
