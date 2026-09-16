@@ -137,14 +137,31 @@
     }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
-    .filter-sticky { top: var(--hdr-h, 61px); transition: top .25s ease, padding .25s ease, box-shadow .25s ease; }
+    .filter-sticky {
+      top: var(--hdr-h, 61px);
+      transition: top .25s ease, padding .25s ease, box-shadow .25s ease, background-color .25s ease;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid #eadfcd;
+      box-shadow: 0 4px 16px -4px rgba(35, 32, 25, 0.08);
+    }
     #site-header { transition: transform .25s ease; will-change: transform; }
 
-    /* ── Opsi A: hemat layar mobile saat scroll ──
-       Scroll ke bawah  → header naik keluar, filter bar naik ke top:0 dan memendek.
-       Scroll ke atas   → header kembali. Hanya berlaku mobile (<768px, di JS). */
+    /* ── Opsi A: Logo compact ikut melayang di mobile saat scroll ── */
+    #sticky-brand {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    body.hdr-hidden #sticky-brand {
+      display: flex;
+    }
     body.hdr-hidden #site-header { transform: translateY(-100%); }
-    body.hdr-hidden .filter-sticky { top: 0; }
+    body.hdr-hidden .filter-sticky {
+      top: 0;
+      box-shadow: 0 6px 20px -4px rgba(35, 32, 25, 0.12);
+    }
     #search-input { transition: padding .25s ease, font-size .25s ease; }
     /* ── Override container widths ── */
     @media (min-width: 640px) {
@@ -491,14 +508,22 @@
   </div>
 
   <!-- Search & Filter -->
-  <section aria-label="Filtro de categorias" class="container mx-auto px-4 sticky filter-sticky z-40 bg-[#faf6f0f2] pt-1.5 pb-2.5 md:pb-4">
-    <div class="flex flex-col md:flex-row gap-2.5 md:gap-3 items-stretch md:items-center">
-      <div class="relative w-full md:max-w-xs">
-        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[#b3a893] text-sm"></i>
-        <input id="search-input" aria-label="Buscar achados" type="text" placeholder="Buscar achados…"
-          class="input-soft w-full pl-10 pr-4 py-3 rounded-full text-sm">
+  <section aria-label="Filtro de categorias" class="sticky filter-sticky z-40 pt-2 pb-2.5 md:pb-4 w-full">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row gap-2 md:gap-3 items-stretch md:items-center">
+        <!-- Baris atas di mobile saat scroll: Brand AliFind + Search Bar + Wishlist -->
+        <div class="flex items-center gap-2.5 w-full md:max-w-md">
+          <a id="sticky-brand" href="#" class="display font-bold text-lg tracking-tight whitespace-nowrap text-[#232019] hover:opacity-80 transition py-0.5" aria-label="AliFind Início">
+            <span>Ali</span><span class="text-[#c9432f]">Find</span>
+          </a>
+          <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#b3a893] text-xs"></i>
+            <input id="search-input" aria-label="Buscar achados" type="text" placeholder="Buscar achados…"
+              class="input-soft w-full pl-9 pr-4 py-2 rounded-full text-xs md:text-sm">
+          </div>
+        </div>
+        <div id="filter-buttons" class="flex flex-nowrap md:flex-wrap gap-1.5 md:gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0"></div>
       </div>
-      <div id="filter-buttons" class="flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0"></div>
     </div>
   </section>
 
