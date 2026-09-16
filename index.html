@@ -161,8 +161,15 @@
       box-shadow: 0 6px 20px -4px rgba(35, 32, 25, 0.12);
     }
     #search-input { transition: padding .25s ease, font-size .25s ease; }
-    /* ── Hero Grid Responsive ── */
+    /* ── Full Width Fluid Container di Layar Lebar ── */
+    @media (min-width: 640px) {
+      .container { max-width: 100% !important; padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+    }
+    @media (min-width: 768px) {
+      .container { max-width: 100% !important; padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+    }
     @media (min-width: 1024px) {
+      .container { max-width: 100% !important; padding-left: 2rem !important; padding-right: 2rem !important; }
       .hero-split-grid {
         display: grid !important;
         grid-template-columns: 1.1fr 0.9fr !important;
@@ -171,12 +178,14 @@
       }
     }
     @media (min-width: 1280px) {
+      .container { max-width: 100% !important; padding-left: 2.5rem !important; padding-right: 2.5rem !important; }
       .hero-split-grid {
         grid-template-columns: 1.05fr 0.95fr !important;
         gap: 3.5rem !important;
       }
     }
     @media (min-width: 1536px) {
+      .container { max-width: 100% !important; padding-left: 3.5rem !important; padding-right: 3.5rem !important; }
       .hero-split-grid {
         grid-template-columns: 1fr 1fr !important;
         gap: 4rem !important;
