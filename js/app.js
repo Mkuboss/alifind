@@ -1017,9 +1017,9 @@ document.addEventListener("DOMContentLoaded", () => {
     trackOutbound(id, name, a.href, loc);
   }, true);
 
-  // ── Opsi A (mobile): header auto-hide saat scroll bawah, filter bar merapat ke atas.
-  //    Scroll ≥240px ke bawah + bergerak turun  → body.hdr-hidden (header keluar) + body.compact (filter menciut)
-  //    Scroll naik >60px atau kembali ke atas   → header muncul lagi. Desktop (≥768px) tidak disentuh.
+  // ── Floating kompak (mobile): begitu keluar dari hero (Y > 80px), header berubah
+  //    menjadi bilah kompak yang menempel di atas — konsisten baik saat scroll turun
+  //    maupun scroll naik. Kembali normal hanya saat Y <= 80px. Desktop tidak disentuh.
   try {
     let lastY = window.scrollY, downFrom = null;
     const mq = window.matchMedia("(max-width: 767px)");
@@ -1033,12 +1033,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (y <= 80) {
         document.body.classList.remove("hdr-hidden", "compact");
         downFrom = null;
-      } else if (y > lastY + 4) {                      // bergerak turun
-        if (downFrom === null) downFrom = lastY;
-        if (y - downFrom > 60) document.body.classList.add("hdr-hidden", "compact");
-      } else if (y < lastY - 4) {                      // bergerak naik
-        downFrom = null;
-        document.body.classList.remove("hdr-hidden");
+      } else {
+        // Begitu melewati 80px (keluar dari hero atas), tetap konsisten floating kompak
+        // baik ditarik ke bawah maupun ditarik ke atas.
+        document.body.classList.add("hdr-hidden", "compact");
       }
       lastY = y;
     };
