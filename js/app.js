@@ -981,20 +981,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ── Floating kompak (mobile): begitu keluar dari hero (Y > 80px), header berubah
   //    menjadi bilah kompak yang menempel di atas — konsisten baik saat scroll turun
-  //    maupun scroll naik. Kembali normal hanya saat Y <= 80px. Desktop tidak disentuh.
+  //    maupun scroll naik. Kembali normal hanya saat Y <= 80px.
+  //    Berlaku di SEMUA ukuran layar (desktop & mobile), agar konsisten.
   try {
-    let lastY = window.scrollY, downFrom = null;
-    const mq = window.matchMedia("(max-width: 767px)");
+    let lastY = window.scrollY;
     const onScrollCompact = () => {
-      if (!mq.matches) {
-        document.body.classList.remove("hdr-hidden", "compact");
-        lastY = window.scrollY; downFrom = null;
-        return;
-      }
       const y = window.scrollY;
       if (y <= 80) {
         document.body.classList.remove("hdr-hidden", "compact");
-        downFrom = null;
       } else {
         // Begitu melewati 80px (keluar dari hero atas), tetap konsisten floating kompak
         // baik ditarik ke bawah maupun ditarik ke atas.
@@ -1008,7 +1002,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ticking = true;
       requestAnimationFrame(() => { onScrollCompact(); ticking = false; });
     }, { passive: true });
-    mq.addEventListener?.("change", onScrollCompact);
     onScrollCompact();
   } catch (err) {}
 
