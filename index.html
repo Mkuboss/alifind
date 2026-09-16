@@ -160,6 +160,13 @@
       top: 0;
       box-shadow: 0 6px 20px -4px rgba(35, 32, 25, 0.12);
     }
+    /* Desktop: saat floating (compact), filter kategori jadi 1 baris (scroll horizontal, tidak wrap) */
+    @media (min-width: 768px) {
+      body.hdr-hidden #filter-buttons {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+      }
+    }
     #search-input { transition: padding .25s ease, font-size .25s ease; }
     /* ── Full Width Fluid Container di Layar Lebar ── */
     @media (min-width: 640px) {
