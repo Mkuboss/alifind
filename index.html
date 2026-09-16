@@ -140,9 +140,7 @@
     .filter-sticky {
       top: var(--hdr-h, 61px);
       transition: top .25s ease, padding .25s ease, box-shadow .25s ease, background-color .25s ease;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: #ffffff;
       border-bottom: 1px solid #eadfcd;
       box-shadow: 0 4px 16px -4px rgba(35, 32, 25, 0.08);
     }
@@ -517,9 +515,9 @@
             <span>Ali</span><span class="text-[#c9432f]">Find</span>
           </a>
           <div class="relative flex-1">
-            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#b3a893] text-xs"></i>
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-[#b3a893] text-xs pointer-events-none"></i>
             <input id="search-input" aria-label="Buscar achados" type="text" placeholder="Buscar achados…"
-              class="input-soft w-full pl-9 pr-4 py-2 rounded-full text-xs md:text-sm">
+              class="input-soft w-full pl-8 pr-3 py-1.5 rounded-full text-xs" style="padding-left: 2rem;">
           </div>
         </div>
         <div id="filter-buttons" class="flex flex-nowrap md:flex-wrap gap-1.5 md:gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0"></div>
