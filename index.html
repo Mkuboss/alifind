@@ -367,7 +367,7 @@
 
   <!-- Hero -->
   <section aria-label="Apresentação" class="container mx-auto px-4 pt-5 pb-3 md:pt-12 md:pb-8">
-    <div class="grid grid-cols-1 hero-split-grid items-center">
+    <div class="grid grid-cols-1 items-center">
       <!-- Kolom kiri: teks + CTA + statistik bento -->
       <div>
         <p class="hero-pill inline-flex items-center text-[11px] sm:text-xs px-3.5 py-1.5 rounded-full mb-3 md:mb-4 font-semibold">
@@ -408,69 +408,7 @@
         </dl>
       </div>
 
-      <!-- Kolom kanan: 1 kartu besar + 2 mini (diisi otomatis JS dari data live)
-           PENTING: `lg:grid` (bukan `lg:block`) — `lg:block` menang atas `grid`
-           sehingga grid-cols-2 tidak pernah aktif dan kartu menumpuk penuh. -->
-      <div class="hidden lg:grid grid-cols-2 gap-4">
-        <!-- Kartu besar: Achado do Dia (rotate, highlight) -->
-        <div class="lg:col-span-2">
-          <div id="hero-spot" class="hero-card rounded-3xl overflow-hidden rotate-1 hover:rotate-0 transition-transform duration-500 cursor-pointer" role="button" tabindex="0" aria-label="Ver achado em destaque">
-            <div class="relative aspect-[4/3] overflow-hidden bg-[#f1eadf]">
-              <img id="hero-spot-img" src="" alt="" class="w-full h-full object-cover" fetchpriority="high">
-              <span class="absolute top-3 left-3 bg-[#232019] text-white text-[11px] font-bold px-3 py-1.5 rounded-full tracking-wide flex items-center gap-1.5">
-                <i class="fa-solid fa-crown text-[#f4c94c] text-[10px]"></i> ACHADO DO DIA
-              </span>
-              <span id="hero-spot-off" class="absolute bottom-3 right-3 price-off text-white text-sm font-extrabold px-3.5 py-1.5 rounded-full"></span>
-            </div>
-            <div class="p-5">
-              <p id="hero-spot-name" class="font-semibold text-[15px] leading-snug line-clamp-2 mb-2.5"></p>
-              <div class="flex items-center justify-between gap-3">
-                <div>
-                  <div class="flex items-baseline gap-2">
-                    <span id="hero-spot-price" class="text-[#232019] font-extrabold text-2xl"></span>
-                    <span id="hero-spot-orig" class="text-[#7a7264] text-sm line-through"></span>
-                  </div>
-                  <p id="hero-spot-save" class="save-line text-xs mt-0.5"><i class="fa-solid fa-piggy-bank text-[9px]"></i> <span id="hero-spot-save-text"></span></p>
-                </div>
-                <span class="buy-btn text-white text-xs font-bold px-5 py-2.5 rounded-full whitespace-nowrap">Ver oferta <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Kartu mini 1 -->
-        <div id="hero-mini-1" class="hero-card-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform duration-300 cursor-pointer" role="button" tabindex="0" aria-label="Ver produto em destaque">
-          <div class="relative aspect-[4/3] overflow-hidden bg-[#f1eadf]">
-            <img id="hero-mini-1-img" src="" alt="" class="w-full h-full object-cover">
-            <span class="absolute top-3 left-3 bg-[#1f7a5c] text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide flex items-center gap-1">
-              <i class="fa-solid fa-star text-[9px] text-[#f4c94c]"></i> HOT
-            </span>
-          </div>
-          <div class="p-4">
-            <p id="hero-mini-1-name" class="font-semibold text-[13.5px] leading-snug line-clamp-2 mb-2"></p>
-            <div class="flex items-center justify-between gap-2">
-              <span id="hero-mini-1-price" class="text-[#232019] font-bold text-lg"></span>
-              <span class="buy-btn text-white text-[10px] font-bold px-4 py-1.5 rounded-full whitespace-nowrap">Ver</span>
-            </div>
-          </div>
-        </div>
-        <!-- Kartu mini 2 -->
-        <div id="hero-mini-2" class="hero-card-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform duration-300 cursor-pointer" role="button" tabindex="0" aria-label="Ver produto em destaque">
-          <div class="relative aspect-[4/3] overflow-hidden bg-[#f1eadf]">
-            <img id="hero-mini-2-img" src="" alt="" class="w-full h-full object-cover">
-            <span class="absolute top-3 left-3 bg-[#c9432f] text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide flex items-center gap-1">
-              <i class="fa-solid fa-bolt text-[9px]"></i> RÁPIDO
-            </span>
-          </div>
-          <div class="p-4">
-            <p id="hero-mini-2-name" class="font-semibold text-[13.5px] leading-snug line-clamp-2 mb-2"></p>
-            <div class="flex items-center justify-between gap-2">
-              <span id="hero-mini-2-price" class="text-[#232019] font-bold text-lg"></span>
-              <span class="buy-btn text-white text-[10px] font-bold px-4 py-1.5 rounded-full whitespace-nowrap">Ver</span>
-            </div>
-          </div>
-        </div>
-        <div class="lg:col-span-2 text-center text-[11px] text-[#6f685c] mt-1">Destaque automático: maior desconto & maior economia da semana</div>
-      </div>
+      <!-- Hero: teks + CTA + statistik saja (tanpa kartu produk, sesuai arahan user) -->
     </div>
   </section>
 
