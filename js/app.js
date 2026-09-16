@@ -700,8 +700,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sf && currentProduct && currentProduct.id === id) syncSheetFav();
   }
 
-  function openWishDrawer()  { wishDrawer.classList.add("open");  wishBackdrop.classList.add("open");  document.body.classList.add("sheet-open"); suppressCookieBanner(true); }
-  function closeWishDrawer() { wishDrawer.classList.remove("open"); wishBackdrop.classList.remove("open"); document.body.classList.remove("sheet-open"); suppressCookieBanner(false); }
+  function openWishDrawer()  {
+    if (!wishDrawer) return;
+    if (!wishDrawer.classList.contains("open")) openOverlayHistory();
+    wishDrawer.classList.add("open");  wishBackdrop.classList.add("open");  document.body.classList.add("sheet-open"); suppressCookieBanner(true);
+  }
+  function closeWishDrawer(fromPop) {
+    if (!wishDrawer || !wishDrawer.classList.contains("open")) return;
+    wishDrawer.classList.remove("open"); wishBackdrop.classList.remove("open"); document.body.classList.remove("sheet-open"); suppressCookieBanner(false);
+    if (!fromPop) closeOverlayHistory();
+  }
 
   if (wishToggle)   wishToggle.addEventListener("click", () => { renderWishDrawer(); openWishDrawer(); });
   if (wishBackdrop) wishBackdrop.addEventListener("click", closeWishDrawer);
@@ -727,6 +735,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // ══════════════════════════════════════════════════════════════
   const sheet        = document.getElementById("product-sheet");
   const sheetBackdrop= document.getElementById("sheet-backdrop");
+
+  // ── Tombol kembali (Android / browser): tutup dulu drawer yang terbuka,
+  //    baru tinggalkan halaman bila tidak ada drawer aktif. Tanpa ini,
+  //    menekan "kembali" langsung keluar dari halaman dan isi di belakang berubah. ──
+  let overlayDepth = 0;        // jumlah entry history milik drawer yang sedang terbuka
+  function openOverlayHistory() {
+    overlayDepth++;
+    try { history.pushState({ afOverlay: overlayDepth }, ""); } catch (e) {}
+  }
+  function closeOverlayHistory() {
+    if (overlayDepth <= 0) return;
+    overlayDepth--;
+    try { history.back(); } catch (e) {}
+  }
+  // Tombol kembali browser/Android: tutup drawer yang terbuka dulu.
+  // Bila tidak ada drawer aktif, tidak melakukan apa-apa → browser lanjut ke halaman sebelumnya.
+  window.addEventListener("popstate", () => {
+    if (overlayDepth > 0) overlayDepth--;
+    if (sheet?.classList.contains("open")) { closeSheet(true); return; }
+    if (wishDrawer?.classList.contains("open")) { closeWishDrawer(true); }
+  });
   // Banner cookie (z-[999]) di-suppress sementara saat modal/drawer terbuka
   // agar tidak menutupi tombol \"Comprar\" di mobile. Kembalikan saat modal tutup.
   function suppressCookieBanner(hide) {
@@ -815,9 +844,12 @@ document.addEventListener("DOMContentLoaded", () => {
     openSheet(parseInt(btn.dataset.related, 10));
   });
 
-  function openSheet(id) {
+  function openSheet(id, fromPop) {
     const p = allProducts.find(x => x.id === id);
     if (!p) return;
+    // deep-link dari browser history: jangan tambah entry baru
+    const wasOpen = sheet.classList.contains("open");
+    if (!wasOpen && !fromPop) openOverlayHistory();
     currentProduct = p;
 
     // Modal: gambar besar layak 960.
@@ -930,7 +962,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => document.getElementById("sheet-close")?.focus(), 60);
   }
 
-  function closeSheet() {
+  function closeSheet(fromPop) {
+    if (!sheet.classList.contains("open")) return;
     sheet.classList.remove("open");
     sheetBackdrop.classList.remove("open");
     document.body.classList.remove("sheet-open");
@@ -938,6 +971,8 @@ document.addEventListener("DOMContentLoaded", () => {
     currentProduct = null;
     // kembalikan fokus ke elemen pemicu tadi
     try { lastFocused?.focus(); } catch (e) {}
+    // selaraskan history: tombol X / backdrop / Escape juga "memakan" entry overlay
+    if (!fromPop) closeOverlayHistory();
   }
 
   if (sheetFav) sheetFav.addEventListener("click", () => { if (currentProduct) toggleFav(currentProduct.id); });
