@@ -46,13 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cat === 'all') {
       const bg = active ? '#232019' : '#f1eadf';
       const fg = active ? '#ffffff' : '#5f5849';
-      return `<button class="filter-btn px-4 py-2.5 rounded-full text-xs font-medium transition-colors" data-category="all" style="background-color:${bg};color:${fg}">Tudo</button>`;
+      return `<button class="filter-btn px-3 py-1.5 rounded-full text-[11px] font-medium transition-colors" data-category="all" style="background-color:${bg};color:${fg}">Tudo</button>`;
     }
     const col = CAT_COLORS[cat] || CAT_COLORS.Beauty;
     const bg = active ? col.bg : '#f1eadf';
     const fg = active ? col.fg : '#5f5849';
     const label = _CAT_PT[cat] || cat;
-    return `<button class="filter-btn px-4 py-2.5 rounded-full text-xs font-medium transition-colors" data-category="${cat}" style="background-color:${bg};color:${fg}">${label}</button>`;
+    return `<button class="filter-btn px-3 py-1.5 rounded-full text-[11px] font-medium transition-colors" data-category="${cat}" style="background-color:${bg};color:${fg}">${label}</button>`;
   };
 
 
@@ -68,6 +68,115 @@ document.addEventListener("DOMContentLoaded", () => {
   const imgTag = (src, size, cls, extra) => src
     ? `<img src="${imgVariant(src, size)}" ${extra} class="${cls}" draggable="false">`
     : `<span class="${cls} flex items-center justify-center bg-[#f1eadf] text-[#b3a893]"><i class="fa-solid fa-box-open text-2xl"></i></span>`;
+
+  // ── WhatsApp share (trafik Brasil mayoritas via WhatsApp) ──
+  // Pakai URL halaman produk (/produto/<slug>/) supaya penerima mendarat di
+  // halaman yang bisa diindeks, bukan modal yang tidak punya URL sendiri.
+  const slugify = (s) => String(s || "")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")   // buang aksen
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60)
+    .replace(/-+$/g, "") || "produto";
+  const productUrl = (p) => `${location.origin}/produto/${slugify(p.name)}-${p.id}/`;
+  const shareBase = (p) => `${p.name} — ${p.price}${p.discount ? ` (-${p.discount}%)` : ""}`;
+  const waShare = (p) => `https://wa.me/?text=${encodeURIComponent(shareBase(p) + "\n" + productUrl(p))}`;
+  const pinShare = (p) => {
+    const u = new URL("https://www.pinterest.com/pin/create/button/");
+    u.searchParams.set("url", productUrl(p));
+    u.searchParams.set("media", p.image || "");
+    u.searchParams.set("description", shareBase(p));
+    return u.toString();
+  };
+  const tgShare = (p) => `https://t.me/share/url?url=${encodeURIComponent(productUrl(p))}&text=${encodeURIComponent(shareBase(p))}`;
+  const nativeShare = async (p) => {
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: p.name, text: shareBase(p), url: productUrl(p) });
+        return;
+      }
+    } catch (e) { /* user cancel / tidak didukung */ }
+    // Fallback desktop: salin link + toast
+    try {
+      await navigator.clipboard.writeText(productUrl(p));
+      showToast('<i class="fa-solid fa-link text-[#e8a13d]"></i> Link copiado!');
+    } catch (e2) {
+      window.prompt("Copie o link:", productUrl(p));
+    }
+  };
+  const clickCopy = async (p) => {
+    try {
+      await navigator.clipboard.writeText(productUrl(p));
+      showToast('<i class="fa-solid fa-link text-[#e8a13d]"></i> Link copiado!');
+    } catch (e) {
+      window.prompt("Copie o link:", productUrl(p));
+    }
+  };
+  // ── Popover share di kartu grid (WA · Pinterest · Telegram · Copy) ──
+  let sharePop = null;
+  function closeSharePop() { if (sharePop) { sharePop.remove(); sharePop = null; } }
+  document.addEventListener("click", (e) => {
+    if (sharePop && !e.target.closest(".share-pop") && !e.target.closest("[data-share-open]")) closeSharePop();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSharePop(); });
+  function openSharePop(btn, p) {
+    closeSharePop();
+    const d = document.createElement("div");
+    d.className = "share-pop bg-white border border-[#eadfcd] rounded-2xl shadow-xl p-2 flex gap-1.5";
+    // WAJIB fixed + ditempel ke <body>: kalau di dalam tombol, popover terpotong
+    // oleh `overflow-y:auto` milik .sheet / kartu.
+    d.style.cssText = "position:fixed;z-index:130;display:flex;gap:6px;padding:8px;background:#fff;border:1px solid #eadfcd;border-radius:16px;box-shadow:0 14px 30px -10px #23201955;";
+    const mk = (href, icon, label, color) => {
+      const a = document.createElement("a");
+      a.className = "w-9 h-9 rounded-full flex items-center justify-center transition";
+      a.style.cssText = `width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:${color};text-decoration:none;`;
+      a.setAttribute("aria-label", label);
+      a.title = label;
+      if (href) { a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer"; }
+      a.innerHTML = `<i class="${icon}"></i>`;
+      a.addEventListener("mouseenter", () => { a.style.background = color; a.style.color = "#fff"; });
+      a.addEventListener("mouseleave", () => { a.style.background = ""; a.style.color = color; });
+      return a;
+    };
+    d.appendChild(mk(waShare(p), "fa-brands fa-whatsapp", "WhatsApp", "#128C4A"));
+    d.appendChild(mk(pinShare(p), "fa-brands fa-pinterest", "Pinterest", "#c9432f"));
+    d.appendChild(mk(tgShare(p), "fa-brands fa-telegram", "Telegram", "#2c6f9c"));
+    // Native share (Web Share API): munculkan hanya bila didukung — di HP ini
+    // membuka sheet OS dengan SEMUA app (Instagram, Messenger, email, dsb).
+    if (navigator.share) {
+      const n = document.createElement("button");
+      n.style.cssText = "width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#232019;background:none;border:0;cursor:pointer;";
+      n.setAttribute("aria-label", "Mais opções de compartilhamento");
+      n.title = "Mais opções";
+      n.innerHTML = '<i class="fa-solid fa-arrow-up-from-bracket"></i>';
+      n.addEventListener("mouseenter", () => { n.style.background = "#f1eadf"; });
+      n.addEventListener("mouseleave", () => { n.style.background = ""; });
+      n.addEventListener("click", (ev) => { ev.stopPropagation(); closeSharePop(); nativeShare(p); });
+      d.appendChild(n);
+    }
+    const c = document.createElement("button");
+    c.style.cssText = "width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#6f685c;background:none;border:0;cursor:pointer;";
+    c.setAttribute("aria-label", "Copiar link");
+    c.title = "Copiar link";
+    c.innerHTML = '<i class="fa-solid fa-link"></i>';
+    c.addEventListener("mouseenter", () => { c.style.background = "#f1eadf"; });
+    c.addEventListener("mouseleave", () => { c.style.background = ""; });
+    c.addEventListener("click", (ev) => { ev.stopPropagation(); clickCopy(p); closeSharePop(); });
+    d.appendChild(c);
+
+    document.body.appendChild(d);
+    // Posisi: di atas tombol, di tengah, dijepit agar tidak keluar viewport
+    const r = btn.getBoundingClientRect();
+    const w = d.offsetWidth, h = d.offsetHeight;
+    let left = r.left + r.width / 2 - w / 2;
+    left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
+    let top = r.top - h - 8;
+    if (top < 8) top = Math.min(r.bottom + 8, window.innerHeight - h - 8);
+    d.style.left = left + "px";
+    d.style.top = top + "px";
+    sharePop = d;
+  }
   let allProducts    = [];
   let activeCategory = "all";
   let searchQuery    = "";
@@ -148,12 +257,10 @@ document.addEventListener("DOMContentLoaded", () => {
       //    harga selalu sama dengan yang tampil; tanpa aggregateRating inventado.
       try {
         const toNum = s => parseFloat(String(s).replace("R$", "").trim().replace(/\./g, "").replace(",", "."));
-        // Snapshot harga: karena hari ini (14/09) kita naik live dan harga sudah
-        // dihitung ulang dari promo aktif katalog batch 118 + rating
-        // diverifikasi ulang ke ulasan asli AliExpress (26 produk baru, jeda
-        // 10 detik/produk), stempel ini WAJIB mengikuti tanggal deploy ini.
+        // Snapshot harga: wave2 scrape SERP BR hari ini (15/09) memverifikasi harga
+        // 141 produk baru; katalog lama masih bertumpu pada snapshot 14/09.
         // Kalau harga katalog disinkronkan ulang, update konstanta ini lagi.
-        const PRICE_SNAPSHOT = new Date("2026-09-14T00:00:00");
+        const PRICE_SNAPSHOT = new Date("2026-09-15T00:00:00");
         // priceValidUntil dihitung dari KALENDER lokal snapshot (bukan getTime()+TZ UTC):
         // cara lama menghasilkan off-by-one di container non-UTC (14/09 + 14d jadi 27, bukan 28).
         const validUntil = new Date(Date.UTC(
@@ -251,6 +358,49 @@ document.addEventListener("DOMContentLoaded", () => {
             });
           }
         }
+
+        // ── Kartu mini hero (2 buah): HOT (terlaris) & RÁPIDO (sales >10k) ──
+        // Filter spot dari daftar sebelum ambil 2 mini
+        const spotId = spot?.id;
+        const miniCandidates = products.filter(p => p.id !== spotId);
+
+        // Kartu mini 1: HOT — terlaris minggu ini (sold paling tinggi selain spot)
+        const hottest = [...miniCandidates].sort((a, b) => {
+          const sa = parseInt((a.sold || "0").replace("k+","000"), 10);
+          const sb = parseInt((b.sold || "0").replace("k+","000"), 10);
+          return sb - sa;
+        })[0];
+
+        if (hottest) {
+          const m1 = document.getElementById("hero-mini-1");
+          if (m1) {
+            m1.dataset.id = hottest.id;
+            const img1 = document.getElementById("hero-mini-1-img");
+            if (img1) { img1.src = imgVariant(hottest.image, 640); img1.alt = hottest.name; }
+            document.getElementById("hero-mini-1-name").textContent = hottest.name;
+            document.getElementById("hero-mini-1-price").textContent = hottest.price;
+            m1.addEventListener("click", () => openSheet(hottest.id));
+          }
+        }
+
+        // Kartu mini 2: RÁPIDO — produk dengan sales tinggi (>=10k) tapi bukan HOT
+        const quick = miniCandidates.filter(p => {
+          const s = parseInt((p.sold || "0").replace("k+","000"), 10);
+          return s >= 10000 && p.id !== (hottest?.id);
+        }).sort((a, b) => parseInt(b.discount || 0, 10) - parseInt(a.discount || 0, 10))[0];
+
+        if (quick) {
+          const m2 = document.getElementById("hero-mini-2");
+          if (m2) {
+            m2.dataset.id = quick.id;
+            const img2 = document.getElementById("hero-mini-2-img");
+            if (img2) { img2.src = imgVariant(quick.image, 640); img2.alt = quick.name; }
+            document.getElementById("hero-mini-2-name").textContent = quick.name;
+            document.getElementById("hero-mini-2-price").textContent = quick.price;
+            m2.addEventListener("click", () => openSheet(quick.id));
+          }
+        }
+
       } catch (e) { /* spotlight opsional — jangan ganggu grid */ }
 
       // ── Kartu penawaran: angka nyata dari katalog (bukan hardcode) ──
@@ -415,7 +565,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Kartu grid ±220px: pakai varian 220 (≈7 KB/gambar vs 23 KB di 480).
     // width/height eksplisit mencegah CLS saat lazy image tiba.
-    const thumbDims = () => ((window.innerWidth < 768) ? ((window.innerWidth - 48) / 2) : 320) | 0;
+    const thumbDims = () => {
+      const w = window.innerWidth;
+      const cols = w < 640 ? 2 : (w < 768 ? 3 : (w < 1024 ? 4 : 5));
+      const pad = 32, gap = w < 768 ? 12 : 16;
+      return Math.max(120, Math.floor((w - pad - (cols - 1) * gap) / cols));
+    };
 
     productGrid.innerHTML = filtered.map((p, i) => {
       const badgeCls = BADGE_STYLE[p.badge] || "bg-[#232019] text-white";
@@ -431,12 +586,16 @@ document.addEventListener("DOMContentLoaded", () => {
                   data-fav="${p.id}" aria-label="Salvar nos favoritos" aria-pressed="${isFav(p.id)}">
             <i class="fa-regular fa-heart text-[15px]"></i>
           </button>
+          <button class="share-btn absolute bottom-2.5 left-2.5 w-10 h-10 rounded-full flex items-center justify-center shadow-sm bg-white/90 text-[#6f685c] hover:text-[#c9432f] transition"
+                  data-share-open="${p.id}" aria-label="Compartilhar ${p.name}" aria-haspopup="true">
+            <i class="fa-solid fa-share-nodes text-[15px]"></i>
+          </button>
         </div>
 
-        <div class="p-4 flex flex-col flex-1">
+        <div class="p-3 md:p-3.5 flex flex-col flex-1">
           <div>${renderCatBadges(p.categories)}</div>
-          <h3 class="font-semibold text-[13.5px] md:text-sm leading-snug line-clamp-2 mb-2 min-h-[2.5em]">
-            <button type="button" data-open="${p.id}" class="text-left hover:text-[#c9432f] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e85d4a] rounded" title="${p.name}">${p.name}</button>
+          <h3 class="font-semibold text-[12px] md:text-[12.5px] leading-snug line-clamp-2 mb-1.5 min-h-[2.4em]">
+            <a href="${productUrl(p)}" data-open="${p.id}" class="text-left hover:text-[#c9432f] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e85d4a] rounded" title="${p.name}">${p.name}</a>
           </h3>
 
           ${(p.rating || p.sold) ? `
@@ -754,6 +913,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     syncSheetFav();
     renderRelated(p);
+    const shBtn = document.getElementById("sheet-share-btn");
+    if (shBtn) {
+      shBtn.onclick = (e) => { e.stopPropagation(); openSharePop(shBtn, p); };
+    }
     const _si = document.getElementById("sheet-img");
     if (_si) { _si.alt = p.name || "Foto do produto"; }
     sheet.classList.add("open");
@@ -806,7 +969,14 @@ document.addEventListener("DOMContentLoaded", () => {
   productGrid.addEventListener("click", e => {
     const favBtn = e.target.closest("[data-fav]");
     if (favBtn) { e.preventDefault(); e.stopPropagation(); toggleFav(parseInt(favBtn.dataset.fav, 10)); return; }
-    if (e.target.closest("a")) return;               // tombol Beli tetap jalan sendiri
+    const shBtn = e.target.closest("[data-share-open]");
+    if (shBtn) {
+      e.preventDefault(); e.stopPropagation();
+      const pr = allProducts.find(x => x.id === parseInt(shBtn.dataset.shareOpen, 10));
+      if (pr) openSharePop(shBtn, pr);
+      return;
+    }
+    if (e.target.closest("a")) return;   // beli & judul (link produk) jalan sendiri
     const openBtn = e.target.closest("[data-open]");
     if (openBtn) { e.preventDefault(); openSheet(parseInt(openBtn.dataset.open, 10)); return; }
     const card = e.target.closest(".product-card");

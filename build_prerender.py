@@ -13,6 +13,7 @@ Marker block:  <!-- PRERENDER:START --> ... <!-- PRERENDER:END -->
 """
 import json
 import re
+import unicodedata
 from html import escape
 from pathlib import Path
 
@@ -29,9 +30,22 @@ def E(v) -> str:
     return escape(str(v if v is not None else ""), quote=True)
 
 
+def slugify(s: str, maxlen: int = 60) -> str:
+    s = unicodedata.normalize("NFD", str(s or ""))
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    s = s.lower()
+    s = re.sub(r"[^a-z0-9]+", "-", s)
+    s = re.sub(r"-+", "-", s).strip("-")
+    return (s[:maxlen].strip("-") or "produto")
+
+
+def product_path(p: dict) -> str:
+    return f"/produto/{slugify(p.get('name') or '')}-{p.get('id')}/"
+
+
 def card(p: dict) -> str:
     name = E(p.get("name"))
-    link = E(p.get("affiliateLink")) or "#"
+    link = E(product_path(p))
     img = E(p.get("image"))
     price = E(p.get("price"))
     orig = E(p.get("originalPrice"))
@@ -40,7 +54,7 @@ def card(p: dict) -> str:
     disc = E(p.get("discount"))
     parts = [
         f'<li class="prerender-card" data-id="{p.get("id")}">',
-        f'<a href="{link}" rel="nofollow sponsored noopener" target="_blank" title="{name}">',
+        f'<a href="{link}" title="{name}">',
         f'<img src="{img}" alt="{name}" loading="lazy" width="480" height="480">',
         f'<h3>{name}</h3>',
         f'<p>Preço: {price}' + (f' <s>{orig}</s>' if orig else "") + "</p>",
@@ -65,7 +79,7 @@ def jsonld(products: list) -> str:
             "@type": "ListItem",
             "position": i,
             "name": p.get("name", ""),
-            "url": p.get("affiliateLink", ""),
+            "url": f"https://mku-api.xyz{product_path(p)}",
         })
     data = {
         "@context": "https://schema.org",

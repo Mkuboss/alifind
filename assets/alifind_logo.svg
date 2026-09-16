@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#fdf9f3"/>
+      <stop offset="70%" stop-color="#faf6f0"/>
+      <stop offset="100%" stop-color="#f1e7d6"/>
+    </radialGradient>
+    <clipPath id="round"><rect width="1024" height="1024" rx="230"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="1024" height="1024" fill="url(#bg)"/>
+    <g fill="#e85d4a" opacity="0.16">
+      <circle cx="90" cy="880" r="46"/><circle cx="934" cy="880" r="46"/>
+      <circle cx="90" cy="150" r="30"/><circle cx="934" cy="150" r="30"/>
+      <circle cx="180" cy="790" r="20"/><circle cx="844" cy="790" r="20"/>
+      <circle cx="180" cy="240" r="14"/><circle cx="844" cy="240" r="14"/>
+      <circle cx="270" cy="860" r="10"/><circle cx="754" cy="860" r="10"/>
+    </g>
+    <g font-family="Georgia,'DejaVu Serif',serif" text-anchor="middle">
+      <text x="502" y="570" font-size="218" font-weight="bold" letter-spacing="-6">
+        <tspan fill="#232019">Ali</tspan><tspan fill="#e85d4a">Find</tspan>
+      </text>
+      <text x="512" y="650" font-family="Verdana,'DejaVu Sans',sans-serif"
+            font-size="44" font-weight="bold" letter-spacing="14" fill="#6f685c">ACHADOS EM ALTA</text>
+    </g>
+    <rect x="392" y="688" width="240" height="10" rx="5" fill="#e85d4a"/>
+    <g transform="translate(512,328)">
+      <path d="M0,-72 L17,-21 L70,-21 L27,11 L43,62 L0,31 L-43,62 L-27,11 L-70,-21 L-17,-21 Z"
+            fill="#e85d4a"/>
+      <circle cx="-88" cy="-48" r="10" fill="#e8a13d"/>
+      <circle cx="88" cy="-48" r="10" fill="#e8a13d"/>
+      <circle cx="-104" cy="8" r="7" fill="#c9432f" opacity="0.7"/>
+      <circle cx="104" cy="8" r="7" fill="#c9432f" opacity="0.7"/>
+    </g>
+  </g>
+</svg>

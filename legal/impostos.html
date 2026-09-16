@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="canonical" href="https://mku-api.xyz/legal/impostos">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Impostos e Importação — AliFind</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/tw.css">
+  <style>
+    :root { --paper: #faf6f0; --card: #ffffff; --ink: #232019; --ink-soft: #6f685c; --coral: #e85d4a; --sand: #f0e7d8; }
+    body { background: var(--paper); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; }
+    .display { font-family: 'Fraunces', Georgia, serif; }
+    .shell { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #eadfcd; padding: 8px 10px; text-align: left; font-size: 13px; }
+    th { background: #f0e7d8; color: #232019; font-weight: 700; }
+    .aviso { background: #fff; border: 1px solid #eadfcd; border-left: 4px solid var(--coral); border-radius: 10px; padding: 12px 14px; }
+    .ex { background: #fff; border: 1px solid #eadfcd; border-radius: 10px; padding: 12px 14px; font-size: 13px; }
+    .ok { color: #0f7a41; font-weight: 700; }
+    h2.sec { font-size: 20px; scroll-margin-top: 20px; }
+    /* Índice: só no desktop (no celular a página fica igual à que você já aprovou) */
+    .toc { display: none; }
+    @media (min-width: 1024px) {
+      .doc-grid { display: grid; grid-template-columns: 205px 1fr; gap: 38px; align-items: start; }
+      .toc { display: block; position: sticky; top: 18px; font-size: 13px; }
+      .toc ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+      .toc a { color: #5f5849; text-decoration: none; font-weight: 600; line-height: 1.35; display: block; }
+      .toc a:hover { color: #c9432f; }
+      .toc .toc-title { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: #5f5849; font-weight: 700; margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="border-b border-[#eadfcd] bg-[#faf6f0cc] backdrop-blur py-4">
+    <div class="shell flex items-center justify-between">
+      <a href="/" class="display font-bold text-xl"><span class="text-[#232019]">Ali</span><span class="text-[#c9432f]">Find</span></a>
+      <a href="/" class="text-xs text-[#6f685c] hover:text-[#a8331f] font-semibold">← Voltar à vitrine</a>
+    </div>
+  </header>
+
+  <main class="shell py-10 flex-1">
+    <h1 class="display text-3xl font-bold text-[#232019]">Impostos e Importação</h1>
+    <p class="text-sm leading-relaxed mt-3">Esta página explica, de forma simples, como funcionam os impostos em compras internacionais feitas pelo AliExpress. As regras abaixo são as que estão em vigor para remessas registradas <strong>desde 12 de maio de 2026</strong>.</p>
+
+    <div class="aviso text-sm leading-relaxed mt-5">
+      <p class="font-bold text-[#232019] mb-1">Resumo rápido</p>
+      <p>O AliExpress é uma plataforma certificada no <strong>Programa Remessa Conforme (PRC)</strong> da Receita Federal. Por isso, nas compras <strong>até US$ 50</strong> o Imposto de Importação é <strong class="ok">zero</strong>. Acima disso, aplica-se a tabela abaixo. Em todos os casos, o <strong>ICMS estadual (17% a 20%)</strong> continua sendo cobrado.</p>
+    </div>
+
+    <div class="doc-grid mt-8 text-sm leading-relaxed">
+      <nav class="toc" aria-label="Índice da página">
+        <p class="toc-title">Nesta página</p>
+        <ol>
+          <li><a href="#sec1">1. Por que o AliExpress é diferente</a></li>
+          <li><a href="#sec2">2. Tabela do Imposto de Importação</a></li>
+          <li><a href="#sec3">3. ICMS (imposto estadual)</a></li>
+          <li><a href="#sec4">4. Exemplos práticos</a></li>
+          <li><a href="#sec5">5. Quem cobra e quando</a></li>
+          <li><a href="#sec6">6. Frete, prazo e rastreio</a></li>
+          <li><a href="#sec7">7. Isenção não é automática</a></li>
+          <li><a href="#sec8">8. Confira a fonte oficial</a></li>
+        </ol>
+      </nav>
+
+      <div class="space-y-6">
+        <section>
+          <h2 id="sec1" class="sec display font-bold text-[#232019]">1. Por que o AliExpress é diferente</h2>
+          <p class="mt-2">O Programa Remessa Conforme certifica as plataformas internacionais que informam os dados da compra à Receita Federal antes do embarque. Quem compra em uma plataforma certificada paga os impostos <strong>já no checkout</strong>, com valor antecipado e sem surpresa na chegada. O AliExpress está na lista oficial de empresas certificadas (Ato Declaratório COANA nº 06/2023).</p>
+        </section>
+
+        <section>
+          <h2 id="sec2" class="sec display font-bold text-[#232019]">2. Tabela do Imposto de Importação (I.I.)</h2>
+          <p class="mt-2 mb-3">Imposto <strong>federal</strong>, administrado pela Receita Federal:</p>
+          <table>
+            <thead>
+              <tr><th>Valor da compra</th><th>Alíquota do I.I.</th><th>Desconto</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>De US$ 0,01 até US$ 50,00</td><td><strong class="ok">0% (isento)</strong></td><td>—</td></tr>
+              <tr><td>De US$ 50,01 até US$ 3.000,00</td><td><strong>60%</strong></td><td>US$ 30,00 sobre o imposto</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-[#5f5849] mt-2">O ICMS <strong>não</strong> está incluído na tabela acima: ele é estadual e incide em qualquer faixa de valor.</p>
+        </section>
+
+        <section>
+          <h2 id="sec3" class="sec display font-bold text-[#232019]">3. ICMS (imposto estadual)</h2>
+          <p class="mt-2">Aplicado à alíquota de <strong>17% a 20%</strong>, conforme o estado de destino. Ele é calculado "por dentro" — ou seja, o próprio imposto entra na base de cálculo. Por isso, o valor final pago é um pouco maior do que uma simples porcentagem do preço do produto.</p>
+        </section>
+
+        <section>
+          <h2 id="sec4" class="sec display font-bold text-[#232019]">4. Exemplos práticos</h2>
+          <div class="ex space-y-2 mt-2">
+            <p><strong>Compra de R$ 100 (dentro do limite de US$ 50), em estado com ICMS de 17%:</strong><br>
+            I.I. = <span class="ok">R$ 0,00</span> · ICMS ≈ <strong>R$ 20,48</strong> · Total de impostos ≈ <strong>R$ 20,48</strong></p>
+            <p class="border-t border-[#eadfcd] pt-2"><strong>Mesma compra em site <em>não</em> certificado:</strong><br>
+            I.I. = R$ 60,00 · ICMS ≈ R$ 108,14 · Total de impostos ≈ <strong>R$ 306,14</strong></p>
+            <p class="text-xs text-[#5f5849] border-t border-[#eadfcd] pt-2">Comprar por uma plataforma certificada como o AliExpress faz diferença direta no bolso: nos exemplos acima, a diferença passa de R$ 280 no total de impostos. Fontes: Receita Federal (gov.br) — "Novas Regras" e "Encomendas com valor até US$ 50".</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 id="sec5" class="sec display font-bold text-[#232019]">5. Quem cobra e quando</h2>
+          <ul class="list-disc pl-5 space-y-1.5 mt-2">
+            <li>Em plataformas certificadas no PRC, o valor dos impostos aparece <strong>no checkout do AliExpress</strong> — você paga junto com o pedido, de forma antecipada.</li>
+            <li>O AliFind <strong>não</strong> participa da cobrança, não recebe esses valores e não define alíquotas. Apenas indicamos o link do produto.</li>
+            <li>Pode haver revisão aduaneira posterior pela Receita Federal. Em caso de divergência de valor declarado, o comprador pode ser chamado a prestar esclarecimentos.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 id="sec6" class="sec display font-bold text-[#232019]">6. Frete, prazo e rastreio</h2>
+          <p class="mt-2">A maioria das encomendas leva de <strong>7 a 15 dias úteis</strong>. O prazo e a modalidade de frete aparecem no AliExpress conforme o seu CEP. O valor final do frete é sempre o exibido no checkout da plataforma.</p>
+        </section>
+
+        <section>
+          <h2 id="sec7" class="sec display font-bold text-[#232019]">7. Isenção não é direito automático</h2>
+          <p class="mt-2">O limite de US$ 50 vale para compras de <strong>uso pessoal</strong>. A Receita Federal pode impor limites de quantidade e frequência, e coíbe a divisão artificial de remessas para uso comercial ou revenda. Comprar em volume para revender não é enquadrado como uso pessoal.</p>
+        </section>
+
+        <section>
+          <h2 id="sec8" class="sec display font-bold text-[#232019]">8. Confira sempre a fonte oficial</h2>
+          <p class="mt-2 mb-3">Regras tributárias mudam. Antes de comprar, confirme a alíquota vigente nos canais oficiais e use a calculadora da Receita Federal:</p>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><a class="text-[#c9432f] font-bold underline" href="https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/manuais/remessas-postal-e-expressa/regras-futuras/regras-futuras" target="_blank" rel="noopener noreferrer">Receita Federal — Novas Regras (compras internacionais)</a></li>
+            <li><a class="text-[#c9432f] font-bold underline" href="https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/manuais/remessas-postal-e-expressa/empresas-certificadas-no-programa-remessa-conforme-prc" target="_blank" rel="noopener noreferrer">Receita Federal — Empresas certificadas no Remessa Conforme</a></li>
+            <li><a class="text-[#c9432f] font-bold underline" href="https://www.gov.br/receitafederal/pt-br/assuntos/aduana-e-comercio-exterior/manuais/remessas-postal-e-expressa/calculadora-versao-iii/calculadora.html" target="_blank" rel="noopener noreferrer">Calculadora de Impostos da Receita Federal</a></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <p class="text-xs text-[#5f5849] pt-6 mt-8 border-t border-[#eadfcd]">Conteúdo informativo, não é consultoria tributária. Informações verificadas em setembro de 2026 com base nas regras vigentes desde 12/05/2026. Última atualização: setembro de 2026.</p>
+    <p class="text-xs text-[#5f5849] mt-2">Os links deste site são links de afiliado: podemos receber comissão por compras qualificadas, sem custo extra para você. <a href="/legal/divulgacao-afiliado" class="text-[#c9432f] font-bold underline">Saiba mais</a>.</p>
+  </main>
+
+  <footer class="border-t border-[#eadfcd] bg-white/50 py-6 text-center text-xs text-[#5f5849]">
+    <p>&copy; 2026 AliFind. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>

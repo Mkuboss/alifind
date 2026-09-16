@@ -1,2 +1,7 @@
-.wrangler/
 *.bak*
+.wrangler/
+shot_*.png
+ck-*.png
+check_overflow.py
+shots.py
+deploy_preview.py

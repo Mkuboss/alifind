@@ -15,6 +15,7 @@ Output: categoria/<slug>/index.html (satu folder per kategori)
 import json
 import re
 import shutil
+import unicodedata
 from html import escape
 from pathlib import Path
 
@@ -67,9 +68,22 @@ def E(v) -> str:
     return escape(str(v if v is not None else ""), quote=True)
 
 
+def slugify(s: str, maxlen: int = 60) -> str:
+    s = unicodedata.normalize("NFD", str(s or ""))
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    s = s.lower()
+    s = re.sub(r"[^a-z0-9]+", "-", s)
+    s = re.sub(r"-+", "-", s).strip("-")
+    return (s[:maxlen].strip("-") or "produto")
+
+
+def product_path(p: dict) -> str:
+    return f"/produto/{slugify(p.get('name') or '')}-{p.get('id')}/"
+
+
 def card(p: dict) -> str:
     name = E(p.get("name"))
-    link = E(p.get("affiliateLink")) or "#"
+    link = E(product_path(p))
     img = E(p.get("image"))
     price = E(p.get("price"))
     orig = E(p.get("originalPrice"))
@@ -85,7 +99,7 @@ def card(p: dict) -> str:
         meta.append(f"-{disc}%")
     return (
         '<li class="card">'
-        f'<a href="{link}" rel="nofollow sponsored noopener" target="_blank">'
+        f'<a href="{link}">'
         f'<img src="{img}" alt="{name}" loading="lazy" width="480" height="480">'
         f'<h2>{name}</h2>'
         f'<p class="price">{price or "Consultar"}</p>'
@@ -111,9 +125,28 @@ PAGE = """<!DOCTYPE html>
   <meta property="og:image" content="{site}/og-image.png">
   <meta property="og:locale" content="pt_BR">
   <script type="application/ld+json">{jsonld}</script>
-  <!-- GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HYQ30MH80M"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','G-HYQ30MH80M');</script>
+  <!-- Consent Mode: GA4 hanya dimuat bila pengguna sudah menyetujui (alifind_consent=granted) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{ dataLayer.push(arguments); }}
+    gtag('consent', 'default', {{
+      ad_storage: 'denied', ad_user_data: 'denied',
+      ad_personalization: 'denied', analytics_storage: 'denied',
+      wait_for_update: 500
+    }});
+    (function () {{
+      var c = null;
+      try {{ c = localStorage.getItem('alifind_consent'); }} catch (e) {{}}
+      if (c !== 'granted') return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HYQ30MH80M';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('consent', 'update', {{ analytics_storage: 'granted' }});
+      gtag('config', 'G-HYQ30MH80M', {{ anonymize_ip: true }});
+    }})();
+  </script>
   <style>
     :root {{ color-scheme: light; }}
     body {{ font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -154,6 +187,7 @@ PAGE = """<!DOCTYPE html>
     <p class="disclosure">Divulgação: AliFind participa do programa de afiliados do AliExpress e pode receber comissão por compras indicadas. Preços e disponibilidade podem mudar; consulte o anúncio oficial.</p>
   </main>
   <footer><div class="wrap">
+    <a href="{site}/legal/impostos">Impostos e Importação</a>
     <a href="{site}/legal/divulgacao-afiliado">Divulgação de afiliado</a>
     <a href="{site}/legal/privacidade">Privacidade</a>
     <a href="{site}/legal/termos">Termos</a>
@@ -174,7 +208,7 @@ def inject_footer_nav(made) -> None:
     block = (
         '<!-- CATNAV:START -->\n'
         '      <nav class="flex flex-wrap justify-center gap-x-2 gap-y-0.5 text-[12.5px] font-semibold text-[#6f685c] pt-2" aria-label="Categorias">\n'
-        '        <span class="px-1 text-[#b3a893]">Categorias:</span>\n'
+        '        <span class="px-1 text-[#5f5849]">Categorias:</span>\n'
         f'        {links}\n'
         '      </nav>\n'
         '      <!-- CATNAV:END -->'

@@ -68,7 +68,17 @@ def main() -> None:
     for loc, lm, cf, pr in cat_urls:
         entries.append(url_entry(loc, lm, cf, pr))
 
-    # 3. Halaman legal
+    # 3. Halaman produk individual
+    prod_dir = ROOT / "produto"
+    prod_urls = []
+    if prod_dir.is_dir():
+        for f in sorted(prod_dir.glob("*/index.html")):
+            slug = f.parent.name
+            prod_urls.append((f"{SITE}/produto/{slug}/", lastmod(f), "weekly", "0.7"))
+    for loc, lm, cf, pr in prod_urls:
+        entries.append(url_entry(loc, lm, cf, pr))
+
+    # 4. Halaman legal
     legal_dir = ROOT / "legal"
     if legal_dir.is_dir():
         for f in sorted(legal_dir.glob("*.html")):
@@ -87,7 +97,7 @@ def main() -> None:
     out.write_text(xml, encoding="utf-8")
     n_legal = len(list(legal_dir.glob("*.html"))) if legal_dir.is_dir() else 0
     print(f"sitemap.xml ditulis: {len(entries)} URL "
-          f"(1 homepage + {len(cat_urls)} kategori + {n_legal} legal)")
+          f"(1 homepage + {len(cat_urls)} kategori + {len(prod_urls)} produk + {n_legal} legal)")
 
 
 if __name__ == "__main__":
